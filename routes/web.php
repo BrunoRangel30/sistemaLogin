@@ -20,6 +20,6 @@ Route::get('/', function () {
 
 Route::post('/auth', [LoginController::class,'authenticate'])->name('auth.user');
 Route::get('/home', function () {
-    return view('index');
+    return view('home');
 })->name('home');
 
