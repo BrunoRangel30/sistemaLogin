@@ -495,7 +495,7 @@
                         </ul>
                     </div>
                     @endif
-                    <div class="itens-form" style="height: 45vh">
+                    <div class="itens-form" style="height: 48vh">
                         <form method="post" action="{{ route('auth.user') }}">
                             @csrf
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
