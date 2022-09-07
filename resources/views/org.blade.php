@@ -1,12 +1,12 @@
 @extends('index')
 <style>
-    .subtitulo1{
-        color: #fff !important;
-        font-size: 1.5em !important;
+    .subtitulo2{
+        color: #3cdd81 !important;
+        font-size: 4em !important;
         text-transform:uppercase;
         font-family:GraphikThin;
-        padding-left: 30px;
-        padding-top: 8px;
+        margin-left: 22%;
+        margin-top: 15%;
     }
     .icone-1{
         font-size: 3em;
@@ -20,9 +20,9 @@
 @section('conteudo')
 <div class="container config-page">
     <div class="row">
-        <div class="col-md-12 col-lg-12" style="display:inline-flex;">
-            <i class="icone-1 fas fa-plus-circle"></i>
-            <a style="text-decoration:none"class="subtitulo1" href="{{ route('org') }}">Plano de Mídia </a>
+        <div class="col-md-12 col-lg-12" style="display:inline-flex">
+
+            <h3 class="subtitulo2"> <b>Em construção</b></h3>
         </div>
     </div>
 </div>

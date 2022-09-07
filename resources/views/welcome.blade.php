@@ -31,7 +31,7 @@
             background-color: #000000;
         }
         .top-login {
-            margin-top: 10px;
+            margin-top: 5px;
         }
         
         .box-form {
@@ -47,7 +47,7 @@
             padding-top: 20px;
             width: 80%;
             margin-bottom: 40px;
-            height: 400px;
+            height: 350px;
            /* border: 2px solid pink*/
         }
         .itens-form input {
@@ -124,7 +124,7 @@
         }
         /*nav*/
         .config-nav{
-           height: 120px;
+           height: 110px;
            background-color: #000000 !important;
            border-bottom: 1px solid #3cdd81;
         }
@@ -192,8 +192,13 @@
 </head>
 
 <body class="antialiased">
-    @component('componentes.menu2')@endcomponent
-    <div class="container top-login">
+     <section class="menu">
+         @component('componentes.menu2')@endcomponent
+     </section>
+     <section class="content">
+         @yield('conteudo')
+     </section>
+   {{-- <div class="container top-login">
         <div class="row">
             <div class="col-md-12">
                 <div style="display:block; margin-left:auto; margin-right:auto;" class="mt-5 mb-5 box-form">
@@ -240,7 +245,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
 </body>
 
 </html>

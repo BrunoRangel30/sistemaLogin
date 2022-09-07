@@ -28,13 +28,20 @@
           <a class="nav-link pl-3 item-menu" href="#">Organização: <i style="color:#3cdd81"class="fas fa-caret-right"></i> R castro Propaganda <span class="sr-only">(current)</span></a>
         </li>
       </ul>
-        <div class="nav-item dropdown pr-5">
+      @if(Auth::check())
+        @php
+            $nome = auth()->user()->name;
+            $pieces = explode(" ", $nome);
+            $result = substr($pieces[0], 0, 2);
+            @endphp
+        <div class="nav-item dropdown">
             <a class="nav-link item-menu" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <p data-letters="R">Rafael de Castro</p>
+                <p data-letters="{{ $result }}">{{ $nome }}</p>
             </a>
-            <div class="dropdown-menu pr-5" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">rangel.bruno28@gmail.com</a>
-              <a class="dropdown-item" href="#">Sair</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item">{{ auth()->user()->email }}</a>
+              <a class="dropdown-item" href="{{ route('logout') }}">Sair</a>
             </div>
-    </div>
+        </div>
+      @endif
   </nav>

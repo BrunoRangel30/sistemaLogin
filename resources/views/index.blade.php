@@ -50,17 +50,9 @@
           /*  background-color: #000000 !important;*/
             border-radius: 10px;
         }
-        .config-nav-2 .dropdown-menu{
-            border-radius:15px;
-            padding-top: 10px;
-            padding-left: 20px;
-        }
         .config-nav-2 .nav-item a {
             color: #3cdd81 !important;
-            font-size: 1em !important;
-            text-transform:uppercase;
-            font-family:GraphikThin;
-            width: 100% !important;
+            font-size: 1em;
         }
         @media all and (max-width: 900px) {
             .box-form {
