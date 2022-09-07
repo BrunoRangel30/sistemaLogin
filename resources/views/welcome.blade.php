@@ -39,6 +39,7 @@
                             @endif
                             <form  method="post" action="{{ route('auth.user') }}">
                                 @csrf
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Email address</label>
                                   <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
@@ -48,7 +49,6 @@
                                   <label for="exampleInputPassword1">Password</label>
                                   <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                                 </div>
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <!--<div class="form-check">
                                   <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                   <label class="form-check-label" for="exampleCheck1">Check me out</label>
