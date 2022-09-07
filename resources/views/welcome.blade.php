@@ -19,12 +19,16 @@
             font-family:GraphikBold;
             src: url("{{ asset('fontes/GraphikBold.otf')}}");
         }
+        @font-face {
+            font-family:GraphikThin;
+            src: url("{{ asset('fontes/GraphikThin.otf')}}");
+        }
         body {
             font-family: 'GraphikBold';
             background-color: #000000;
         }
         .top-login {
-            margin-top: 115px;
+            margin-top: 10px;
         }
         
         .box-form {
@@ -115,13 +119,42 @@
         .titulo-login{
             text-transform:uppercase;
         }
+        /*nav*/
+        .config-nav{
+            height: 120px;
+           background-color: #000000 !important;
+           border-bottom: 1px solid #3cdd81;
+        }
+        .config-nav .nav-item {
+                margin-right: 30px;
+        }
+        .config-nav .nav-item a {
+                color: #3cdd81 !important;
+                font-size: 1.4em !important;
+                text-transform:uppercase;
+                font-family:GraphikThin;
+        }
+        .config-nav .navbar-brand {
+            font-size: 2.3em;
+            text-transform:uppercase;
+            margin-left: 15px;
+        }
+        .config-nav .pl-1{
+            color: #fff
+        }
+        .config-nav .pl-2{
+            color:#3cdd81
+        }
+        .navbar-light .navbar-toggler-icon {
+           color:#fff !important
+        }
         @media all and (max-width: 900px) {
             .box-form {
                 width: 100% !important;
                 /*border: 2px solid red*/
             }
             .top-login {
-                margin-top: 150px !important;
+                margin-top: 30px !important;
                /* border: 2px solid yellowgreen;*/
             }
             .bt-1 {
@@ -130,11 +163,17 @@
             .bt-2 {
                 width: 40%;
             }
+            .config-nav .navbar-brand {
+                font-size: 1.2em !important;
+                text-transform:uppercase;
+                margin-left: 5px;
+            }
         }
     </style>
 </head>
 
 <body class="antialiased">
+    @component('componentes.menu2')@endcomponent
     <div class="container top-login">
         <div class="row">
             <div class="col-md-12">
