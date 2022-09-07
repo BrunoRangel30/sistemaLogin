@@ -15,11 +15,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Styles -->
     <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-            background-color: #000000
+        @font-face {
+            font-family:GraphikBold;
+            src: url("{{ asset('fontes/GraphikBold.otf')}}");
         }
-        
+        body {
+            font-family: 'GraphikBold';
+            background-color: #000000;
+        }
         .top-login {
             margin-top: 115px;
         }
@@ -37,7 +40,12 @@
             padding-top: 20px;
             width: 80%;
             margin-bottom: 40px;
+            height: 400px;
            /* border: 2px solid pink*/
+        }
+        .itens-form input {
+            border: 1px solid #000000;
+            border-radius: 10px;
         }
         
         .cabecalho-login {
@@ -61,7 +69,7 @@
         
         .bt-1 {
             width: 50%;
-            border-right: 2px solid #3cdd80;
+            border-right: 2px solid #3cdd81;
         }
         
         .bt-2 {
@@ -71,19 +79,38 @@
             position: relative;
         }
         .botao-entrar .btn-primary{
-            background-color: #3cdd80;
-            border-color: #3cdd80;
+            background-color: #3cdd81;
+            border-color: #3cdd81;
+            border-radius: 10px;
         }
+        /*retirar efeitos padrao*/
         .botao-entrar .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
             color: #fff;
-            background-color: #3cdd80;
-            border-color: #3cdd80;
+            background-color: #3cdd81;
+            border-color: #3cdd81;
         }
         .botao-entrar .btn-primary.focus, .btn-primary:focus {
-            box-shadow: 0 0 0 0.2rem #3cdd80;
+            box-shadow: 0 0 0 0.2rem #3cdd81;
         }
         .botao-entrar .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
-            box-shadow: 0 0 0 0.2rem #3cdd80;
+            box-shadow: 0 0 0 0.2rem #3cdd81;
+        }
+        /*returar efeitos botoes inferioes*/
+        .botoes-cabecalho .btn-primary {
+            color: ##000000;
+            background-color: #ffffff;
+            border-color: #ffffff;
+        }
+        .botoes-cabecalho .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+            color: ##000000;
+            background-color: #ffffff;
+            border-color: #ffffff;
+        }
+        .botoes-cabecalho .btn-primary.focus, .btn-primary:focus {
+            box-shadow: 0 0 0 0.2rem #ffffff;
+        }
+        .botoes-cabecalho .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+            box-shadow: 0 0 0 0.2rem #ffffff;
         }
         .titulo-login{
             text-transform:uppercase;
@@ -113,8 +140,8 @@
             <div class="col-md-12">
                 <div style="display:block; margin-left:auto; margin-right:auto;" class="mt-5 mb-5 box-form">
                     <div class="cabecalho-login pt-3">
-                        <i style="color:#3cdd80" class="fas fa-circle"></i>
-                        <h2 class="pt-3 titulo-login">bem vindo</h2>
+                        <i style="color:#3cdd81" class="fas fa-circle"></i>
+                        <h2 class="pt-3 titulo-login">bem-vindo</h2>
                     </div>
                     @if($errors->any())
                     <div class="alert alert-danger" style="text-align: center;">
@@ -125,7 +152,7 @@
                         </ul>
                     </div>
                     @endif
-                    <div class="itens-form" style="height: 48vh">
+                    <div class="itens-form">
                         <form method="post" action="{{ route('auth.user') }}">
                             @csrf
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -139,7 +166,7 @@
                                 <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Digite sua senha">
                             </div>
                             <div class="botao-entrar pt-3">
-                                <i style="position:absolute;margin-top:25px; margin-left:20px;color:#fff"class="fas fa-lock"></i>
+                                <i style="position:absolute;margin-top:27px; margin-left:20px;color:#fff"class="fas fa-lock"></i>
                                 <button style="width:100%;" type="submit" class="btn btn-primary pt-2 pb-2 mt-3">Entrar</button>
                             </div>
                         </form>
