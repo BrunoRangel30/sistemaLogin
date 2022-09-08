@@ -2,8 +2,8 @@
 <style>
     .subtitulo1{
         color: #fff !important;
-        font-size: 1.5em !important;
-        text-transform:uppercase;
+        font-size: 1.6em !important;
+       /* text-transform:uppercase;*/
         /*font-family:GraphikThin;*/
         padding-left: 30px;
         padding-top: 8px;

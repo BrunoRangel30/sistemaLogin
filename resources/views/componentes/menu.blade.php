@@ -17,7 +17,7 @@
       font-family: 'GraphikBold';
   }
 </style>
-
+@inject('org', 'App\Models\Organizacao')
 <nav class="navbar navbar-expand-lg navbar-light bg-light config-nav-2">
   <div class="justify-content-end">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,18 +28,27 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link pl-3 item-menu" href="#">Organização: <i style="color:#3cdd81"class="fas fa-caret-right"></i> RCastro Propaganda</a>
+          @if(Auth::check())
+            @php
+              $org = $org->getOrg(auth()->user()->id);
+            @endphp
+          <a class="nav-link pl-3 item-menu" href="#">Organização: <i style="color:#3cdd81"class="fas fa-caret-right"></i> {{ $org->org }}</a>
+          @endif
         </li>
       </ul>
       @if(Auth::check())
         @php
             $nome = auth()->user()->name;
             $pieces = explode(" ", $nome);
-            $result = substr($pieces[0], 0, 2);
+            $letra2 = '';
+            if(isset($pieces[1])){
+              $letra2 = substr($pieces[1], 0, 1);
+            }
+            $letra1 = substr($pieces[0], 0, 1);
             @endphp
         <div class="nav-item dropdown">
             <a class="nav-link item-menu" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <p data-letters="{{ $result }}">{{ $nome }}</p>
+                <p data-letters="{{ $letra1 }}{{ $letra2 }}">{{ $nome }}</p>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item">{{ auth()->user()->email }}</a>
