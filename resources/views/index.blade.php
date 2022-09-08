@@ -11,23 +11,32 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <style>
+          @font-face {
+            font-family:GraphikBold;
+            src: url("{{ asset('fontes/GraphikBold.otf')}}");
+        }
+        @font-face {
+            font-family:GraphikRegular;
+            src: url("{{ asset('fontes/GraphikRegular.otf')}}");
+        }
          body {
-            font-family: 'GraphikBold';
+            font-family: 'GraphikRegular';
             background-color: #000000;
         }
         .config-nav-2{
-           height: 120px;
+           height: 140px;
            background-color: #000000 !important;
            border-bottom: 1px solid #3cdd81;
         }
         .config-nav-2 .nav-item {
-            margin-right: 30px;
+            margin-right: 50px;
+            margin-left: 30px;
         }
         .config-nav-2 .nav-item .item-menu {
             color: #fff !important;
-            font-size: 1.2em !important;
-            text-transform:uppercase;
-            font-family:GraphikThin;
+            font-size: 1.7em !important;
+            /*text-transform:uppercase;*/
+         /*   font-family:GraphikThin;*/
         }
         .config-nav-2 .navbar-brand {
             font-size: 2.3em;
@@ -50,18 +59,22 @@
           /*  background-color: #000000 !important;*/
             border-radius: 10px;
         }
+        /*menu interno*/
+        .config-nav-2 .nav-item{
+            padding: 10px;
+        }
         .config-nav-2 .nav-item a {
             color: #3cdd81 !important;
-            font-size: 1em;
+            font-size: 1.3em;
         }
         @media all and (max-width: 900px) {
-            .box-form {
+          /*  .box-form {
                 width: 100% !important;
-                /*border: 2px solid red*/
+                /*border: 2px solid red
             }
             .top-login {
                 margin-top: 30px !important;
-               /* border: 2px solid yellowgreen;*/
+               /* border: 2px solid yellowgreen;
             }
             .bt-1 {
                 width: 40%;
@@ -70,19 +83,19 @@
                 width: 40%;
             }
             .config-nav-2 .navbar-brand {
-                font-size: 1.4em !important;
+                font-size: 2em !important;
                 text-transform:uppercase;
                 margin-left: 5px;
             }
             .config-nav-2{
-                height: 60px;
+                height: 160px;
             }
             .config-nav-2 .nav-item a {
                 color: #3cdd81 !important;
                 font-size: 1.2em !important;
                 text-transform:uppercase;
-                font-family:GraphikThin;
-            }
+               /* font-family:GraphikThin;
+            }*/
         }
     </style>
 </head>

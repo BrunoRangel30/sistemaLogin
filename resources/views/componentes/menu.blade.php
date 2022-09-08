@@ -2,6 +2,7 @@
   [data-letters]:before {
       content:attr(data-letters);
       display:inline-block;
+      text-transform:uppercase;
       font-size:1em;
       width:2.5em;
       height:2.5em;
@@ -12,6 +13,8 @@
       vertical-align:middle;
       margin-right:1em;
       color:black;
+      font-weight: bolder;
+      font-family: 'GraphikBold';
   }
 </style>
 
@@ -25,7 +28,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link pl-3 item-menu" href="#">Organização: <i style="color:#3cdd81"class="fas fa-caret-right"></i> R castro Propaganda <span class="sr-only">(current)</span></a>
+          <a class="nav-link pl-3 item-menu" href="#">Organização: <i style="color:#3cdd81"class="fas fa-caret-right"></i> RCastro Propaganda</a>
         </li>
       </ul>
       @if(Auth::check())

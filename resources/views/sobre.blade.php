@@ -4,7 +4,7 @@
         color: #3cdd81 !important;
         font-size: 4em !important;
         text-transform:uppercase;
-        font-family:GraphikThin;
+        font-family:GraphikRegular;;
         margin-left: 22%;
         margin-top: 15%;
     }
@@ -21,7 +21,6 @@
 <div class="container config-page">
     <div class="row">
         <div class="col-md-12 col-lg-12" style="display:inline-flex">
-
             <h3 class="subtitulo2"> <b>Em construção</b></h3>
         </div>
     </div>

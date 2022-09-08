@@ -4,7 +4,7 @@
         color: #3cdd81 !important;
         font-size: 4em !important;
         text-transform:uppercase;
-        font-family:GraphikThin;
+        font-family:GraphikRegular;
         margin-left: 22%;
         margin-top: 15%;
     }

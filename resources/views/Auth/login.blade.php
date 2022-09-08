@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div style="display:block; margin-left:auto; margin-right:auto;" class="mt-5 mb-5 box-form">
                     <div class="cabecalho-login pt-3">
-                        <i style="color:#3cdd81" class="fas fa-circle"></i>
+                        {{--<i style="color:#3cdd81" class="fas fa-circle"></i>--}}
                         <h2 class="pt-3 titulo-login">bem-vindo</h2>
                     </div>
                     @if($errors->any())
