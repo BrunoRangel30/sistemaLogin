@@ -32,7 +32,7 @@
             @php
               $org = $org->getOrg(auth()->user()->id);
             @endphp
-          <a class="nav-link pl-3 item-menu" href="#">Organização: <i style="color:#3cdd81"class="fas fa-caret-right"></i> {{ $org->org }}</a>
+          <a class="nav-link pl-3 item-menu" href="{{ route('home') }}">Organização: <i style="color:#3cdd81"class="fas fa-caret-right"></i> {{ $org->org }}</a>
           @endif
         </li>
       </ul>
