@@ -56,7 +56,7 @@
     
     #client-plan tr td i {
         color: #61fb89;
-        padding: 3px;
+        padding: 2px;
     }
     
     #client-plan th {
@@ -280,6 +280,7 @@
                                 <td>
                                     <i class="fas fa-edit"></i>
                                     <i class="fas fa-clone"></i>
+                                    <i class="fas fa-trash-alt"></i>
                                 </td>
                             </tr>
                         </tbody>
