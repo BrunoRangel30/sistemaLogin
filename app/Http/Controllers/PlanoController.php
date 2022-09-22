@@ -21,16 +21,22 @@ class PlanoController extends Controller
         $this->org = $org;
        
     }*/
+    protected $org;
+    public function __construct()
+    {
+        $org = new Organizacao();
+        $this->org = $org;
+    }
     public function index(Request $request)
     {
-       $org = Organizacao::getCliOrg($request->id_cliente);
+       $org = $this->org->getCliOrg($request->id_cliente);
      //  dd($org);
         return view('org', compact('org'));
     }
 
     public function getTableAjax(Request $request)
     {
-        $orgResul= Organizacao::getPlaOrg($request->id);
+        $orgResul= $this->org->getPlaOrg($request->id);
         $org['data'] = $orgResul;
         return $org;
     }
