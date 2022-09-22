@@ -28,10 +28,12 @@ Route::get('/logout', function () {
 Route::get('/home', function () {
     return view('home');
 })->name('home');
-//Organizacao
-Route::get('/org', function () {
+//Plano
+Route::get('/planos/{id_cliente}', 'App\Http\Controllers\PlanoController@index')->name('plano')->middleware("auth");
+Route::post('/getTablePanos', 'App\Http\Controllers\PlanoController@getTableAjax')->name('planoTable')->middleware("auth");
+/*Route::get('/plano', function () {
     return view('org');
-})->name('org');
+})->name('org');*/
 //sobre
 Route::get('/sobre', function () {
     return view('sobre');

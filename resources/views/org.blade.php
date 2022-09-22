@@ -52,6 +52,7 @@
     
     #client-plan tr td input {
         padding: 8px;
+        width: 150px;
     }
     
     #client-plan tr td i {
@@ -75,6 +76,9 @@
         color: #61fb89;
         text-align: center;
     }
+    #client-plan .dataTables_empty{
+        color: #ffffff
+    }
     
     .botoes-table button {
         background-color: #61fb89;
@@ -90,8 +94,8 @@
 <div class="config-page">
     <div class="box-table">
         <div class="box-cliente">
-            <p>Organização: RCastro Propaganda</p>
-            <p>Cliente: Pig Pay</p>
+            <p>Organização: {{ $org->org }}</p>
+            <p>Cliente: {{ $org->nome }}</p>
             <p>Plano de Mídia: Teste</p>
         </div>
         <div class="row">
@@ -167,9 +171,9 @@
                 </table>
             </div>
             <div class="col-md-10 col-lg-10 table-responsive" style="padding-left: 5px;">
-                <table id="client-plan" class="table  table-bordered cabecalho-table ">
+                <table id="client-plan" class="table table-bordered cabecalho-table ">
                     <div class="botoes-table">
-                        <button type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Add Linha</b></button>
+                        <button id="addRow" type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Add Linha</b></button>
                         <button type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Consolidar</b></button>
                         <button type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Salvar</b></button>
                     </div>
@@ -190,7 +194,7 @@
                             <th>Ações</th>
                         </tr>
                         <tbody>
-                            <tr>
+                           <!-- <tr>
                                 <td>
                                     <input value='' type="text">
                                 </td>
@@ -282,24 +286,101 @@
                                     <i class="fas fa-clone"></i>
                                     <i class="fas fa-trash-alt"></i>
                                 </td>
-                            </tr>
+                            </tr>-->
                         </tbody>
                     </thead>
                 </table>
             </div>
         </div>
     </div>
+    <input id="data-route-url-table" type="hidden" data-route-url-table="{{ route('planoTable') }}">
+    <input id="data-cliente-id" type="hidden" data-cliente-id="{{ $org->fk_cliente }}">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 </div>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" integrity="" crossorigin="anonymous">
+
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" integrity="" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" integrity="" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
-        //  url = $("#url-ajax-table-vendas").attr('data-url-ajax')
+          let url = $("#data-route-url-table").attr('data-route-url-table')
+          id = $("#data-cliente-id").attr('data-cliente-id')
         var table = $('#client-plan').DataTable({
             searching: "false",
             paging: false,
-            "searching": false,
-            "info": false,
+            "processing": true,
+            searching: false,
+            info: false,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+            },
+           /* order: [[2, 'asc']],*/
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                'data': function (d) {
+                        d._token = $("input[name=_token]").val();
+                        d.id = id
+                }
+            },
+            "columns":[
+                    {
+                        data:'regiao',
+                       
+                    },
+                    {  data:'regiao'
+    
+                    },
+                    {
+                        data:'regiao',
+                    },
+                    {
+                        data:'regiao',
+                    },
+                    {
+                        data:'regiao',
+                    },
+                    {
+                        data:'regiao',
+                    },
+                    {
+                        data:'regiao',
+                    },
+                    {
+                        data:'regiao',
+                    },
+                    {
+                        data:'regiao',
+                    },
+                    {
+                        data:'regiao',
+                    },
+                    {
+                        data:'regiao',
+                    },
+                    {
+                        data:'regiao',
+                    },
+                    {
+                        data:'regiao',
+                    },
+                    
+            ],   
+            rowGroup: {
+                endRender: function ( rows, group ) {
+                    var avg = rows
+                        .data()
+                        .pluck(5)
+                        .reduce( function (a, b) {
+                            return a + b.replace(/[^\d]/g, '')*1;
+                        }, 0) / rows.count();
+    
+                    return 'Average salary in '+group+': '+
+                        $.fn.dataTable.render.number(',', '.', 0, '$').display( avg );
+                },
+                dataSrc: 2
+            }
+
             /* "ajax": {
                  "url": url,
                  "type": "GET",
@@ -386,38 +467,49 @@
                  },
                  
              ]*/
-            /* ajax: {
-                 url: "http://myjson.dit.upm.es/api/bins/11el",
-                 method: "Get",
-                 dataType: "json"
-             },
-             searching: "false",
-             /*  columns: [{
-                   data: "id"
-               }, {
-                   data: "fullname"
-               }, {
-                   data: "statusDescr"
-               }],
-               /* initComplete: function(settings, json) {
-                    var officeData = this.api().column(2).data();
-                    var officeNodes = this.api().column(2).nodes().toArray();
-                    var officeList = officeData.unique().sort().toArray()
-                    console.log(officeNodes)
-                    officeData.each(function(cellValue, idx) {
-                        var options = '';
-                        officeList.forEach((office) => {
-                            if (office === cellValue) {
-                                options = options + '<option value="' + office + '" selected>' + office + '</option>';
-                            } else {
-                                options = options + '<option value="' + office + '">' + office + '</option>';
-                            }
-                        })
-                        var officeSelect = $('<select id="ID NUMBER" >' + options + '</select>');
-                        officeSelect.prependTo($(officeNodes[idx]).empty());
-                    })
-                }*/
+           
         });
+        function getdrop(item){
+            console.log(item,'item')
+           let drop=    `<div class="dropdown">
+                            <input value='selecione' readonly="readonly" type="text" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">`
+                                item.map(function(i){
+                            drop+=`<a class="dropdown-item" href="#">${i}</a>`
+                                })
+                    drop+=`</div>
+                        </div>`
+            return drop
+        }
+        $('#addRow').on('click', function () {
+            $("table .dataTables_empty").hide()
+            var actions = $("table td:last-child").html();
+            var index = $("table tbody tr:last-child").index();
+            console.log(index, 'x')
+            var row = '<tr>' +
+                '<td><input type="text" class="form-control" name="regiao" id="regiao"></td>' +
+                '<td><input type="text" class="form-control" name="personalizar_1" id="personalizar_1"></td>' +
+                '<td><input type="text" class="form-control" name="personalizar_2" id="personalizar_2"></td>' +
+                '<td><input type="text" class="form-control" name="campanha" id="campanha"></td>' +
+                '<td><input type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td>' +
+                '<td>'+ getdrop(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'])+'</td>'+
+                '<td>'+ getdrop(['Google','Meta','Linkedin','Twitter','Personalizar'])+'</td>' +
+                '<td>'+ getdrop(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'])+'</td>' +
+                '<td>'+ getdrop(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'])+'</td>' +
+                '<td>'+ getdrop(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'])+'</td>' +
+                '<td><input type="text" class="form-control" name="periodo" id="periodo"></td>' +
+                '<td><input type="text" class="form-control" name="investimento" id="investimento"></td>' +
+                `<td> <i class='fas fa-edit'></i>
+                      <i class='fas fa-clone'></i>
+                    <i class='fas fa-trash-alt'></i></td>` +
+                '</tr>';
+                console.log(row);
+            $("#client-plan").append(row);
+                  
+    })
+                
+
+        
     })
 </script>
 @endsection

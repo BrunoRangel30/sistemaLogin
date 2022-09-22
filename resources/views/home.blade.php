@@ -33,9 +33,9 @@
     }
 </style>
 @section('conteudo')
+@inject('org', 'App\Models\Organizacao')
 <div class="config-page">
     <div class="row">
-        
         <div class="col-md-12 col-lg-12" style="display:inline-flex;">
             <i class="icone-1 fas fa-plus-circle"></i>
             <div class="btn-group pl-3 botao1">
@@ -45,13 +45,19 @@
                 <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
-                <div class="dropdown-menu">
-                    <ul>
-                        <li class="pt-2"><a style="color:#3cdd81;text-decoration: none" href="{{route('org')}}">Cliente 2</a></li>
-                        <li class="pt-2"><a style="color:#3cdd81;text-decoration: none"href="{{route('org')}}">Cliente 2</a></li>
-                        <li class="pt-2"><a style="color:#3cdd81;text-decoration: none" href="{{route('org')}}">Cliente 2</a></li>
-                    </ul>
-                </div>
+                @if(Auth::check())
+                    @php
+                      $org2 = $org->getOrg(auth()->user()->id);
+                      $cliente= $org->getOrgCli($org2->org_id);
+                    @endphp
+                    <div class="dropdown-menu">
+                        <ul>
+                            @foreach ($cliente as $item)
+                                <li class="pt-2"><a style="color:#3cdd81;text-decoration: none" href="{{route('plano',['id_cliente'=>$item->id ])}}">{{ $item->nome }}</a></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
             {{-- <astyle="text-decoration:none"class="subtitulo1"href="route('org')}}">Plano de Mídia </a>--}}
         </div>
