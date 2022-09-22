@@ -194,99 +194,6 @@
                             <th>Ações</th>
                         </tr>
                         <tbody>
-                           <!-- <tr>
-                                <td>
-                                    <input value='' type="text">
-                                </td>
-                                <td>
-                                    <input value='' type="text">
-                                </td>
-                                <td>
-                                    <input value='' type="text">
-                                </td>
-                                <td>
-                                    <input value='' type="text">
-                                </td>
-                                <td>
-                                    <input value='' type="text">
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <input value='selecione' readonly="readonly" type="text" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Alcance</a>
-                                            <a class="dropdown-item" href="#">Reconhecimento</a>
-                                            <a class="dropdown-item" href="#">tráfego</a>
-                                            <a class="dropdown-item" href="#">Conversões</a>
-                                            <a class="dropdown-item" href="#">Personalizar</a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <input value='selecione' readonly="readonly" type="text" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Google</a>
-                                            <a class="dropdown-item" href="#">Meta</a>
-                                            <a class="dropdown-item" href="#">Linkedin</a>
-                                            <a class="dropdown-item" href="#">Twitter</a>
-                                            <a class="dropdown-item" href="#">Personalizar</a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <input value='selecione' readonly="readonly" type="text" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Search</a>
-                                            <a class="dropdown-item" href="#">Display</a>
-                                            <a class="dropdown-item" href="#">Youtube</a>
-                                            <a class="dropdown-item" href="#">Facebook</a>
-                                            <a class="dropdown-item" href="#">Instagram</a>
-                                            <a class="dropdown-item" href="#">Linkedin</a>
-                                            <a class="dropdown-item" href="#">Twitter</a>
-                                            <a class="dropdown-item" href="#">Personalizar</a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <input value='selecione' readonly="readonly" type="text" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Texto</a>
-                                            <a class="dropdown-item" href="#">Banner</a>
-                                            <a class="dropdown-item" href="#">Vídeo</a>
-                                            <a class="dropdown-item" href="#">Push Notification</a>
-                                            <a class="dropdown-item" href="#">Imagens única</a>
-                                            <a class="dropdown-item" href="#">Carrossel</a>
-                                            <a class="dropdown-item" href="#">Personalizar</a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <input value='selecione' readonly="readonly" type="text" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">CPM</a>
-                                            <a class="dropdown-item" href="#">CPC</a>
-                                            <a class="dropdown-item" href="#">CPV</a>
-                                            <a class="dropdown-item" href="#">CPE</a>
-                                            <a class="dropdown-item" href="#">CPL</a>
-                                            <a class="dropdown-item" href="#">CPA</a>
-                                            <a class="dropdown-item" href="#">Personalizar</a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td> <input value='' type="text">
-                                </td>
-                                <td> <input value='' type="text">
-                                </td>
-                                <td>
-                                    <i class="fas fa-edit"></i>
-                                    <i class="fas fa-clone"></i>
-                                    <i class="fas fa-trash-alt"></i>
-                                </td>
-                            </tr>-->
                         </tbody>
                     </thead>
                 </table>
@@ -475,7 +382,7 @@
                             <input value='selecione' readonly="readonly" type="text" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">`
                                 item.map(function(i){
-                            drop+=`<a class="dropdown-item" href="#">${i}</a>`
+                            drop+=`<a class="dropdown-item">${i}</a>`
                                 })
                     drop+=`</div>
                         </div>`
@@ -483,32 +390,35 @@
         }
         $('#addRow').on('click', function () {
             $("table .dataTables_empty").hide()
-            var actions = $("table td:last-child").html();
             var index = $("table tbody tr:last-child").index();
-            console.log(index, 'x')
             var row = '<tr>' +
-                '<td><input type="text" class="form-control" name="regiao" id="regiao"></td>' +
-                '<td><input type="text" class="form-control" name="personalizar_1" id="personalizar_1"></td>' +
-                '<td><input type="text" class="form-control" name="personalizar_2" id="personalizar_2"></td>' +
-                '<td><input type="text" class="form-control" name="campanha" id="campanha"></td>' +
-                '<td><input type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td>' +
-                '<td>'+ getdrop(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'])+'</td>'+
-                '<td>'+ getdrop(['Google','Meta','Linkedin','Twitter','Personalizar'])+'</td>' +
-                '<td>'+ getdrop(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'])+'</td>' +
-                '<td>'+ getdrop(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'])+'</td>' +
-                '<td>'+ getdrop(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'])+'</td>' +
-                '<td><input type="text" class="form-control" name="periodo" id="periodo"></td>' +
-                '<td><input type="text" class="form-control" name="investimento" id="investimento"></td>' +
-                `<td> <i class='fas fa-edit'></i>
-                      <i class='fas fa-clone'></i>
-                    <i class='fas fa-trash-alt'></i></td>` +
-                '</tr>';
-                console.log(row);
+                        '<td><input type="text" class="form-control" name="regiao" id="regiao"></td>' +
+                        '<td><input type="text" class="form-control" name="personalizar_1" id="personalizar_1"></td>' +
+                        '<td><input type="text" class="form-control" name="personalizar_2" id="personalizar_2"></td>' +
+                        '<td><input type="text" class="form-control" name="campanha" id="campanha"></td>' +
+                        '<td><input type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td>' +
+                        '<td>'+ getdrop(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'])+'</td>'+
+                        '<td>'+ getdrop(['Google','Meta','Linkedin','Twitter','Personalizar'])+'</td>' +
+                        '<td>'+ getdrop(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'])+'</td>' +
+                        '<td>'+ getdrop(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'])+'</td>' +
+                        '<td>'+ getdrop(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'])+'</td>' +
+                        '<td><input type="text" class="form-control" name="periodo" id="periodo"></td>' +
+                        '<td><input type="text" class="form-control" name="investimento" id="investimento"></td>' +
+                        `<td><i class='fas fa-clone '></i><i class='fas fa-trash-alt delete'></i></td>` +
+                    '</tr>';
             $("#client-plan").append(row);
-                  
-    })
-                
-
+       
+        })   
+         // Delete row on delete button click
+        $(document).on("click", ".delete", function(){
+            $(this).parents("tr").remove();
+           /* $(".add-new").removeAttr("disabled");
+            var id = $(this).attr("id");
+            var string = id;
+            $.post("ajax_delete.php", { string: string}, function(data) {
+            $("#displaymessage").html(data);
+            });*/
+        });
         
     })
 </script>
