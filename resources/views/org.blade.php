@@ -54,7 +54,16 @@
         padding: 8px;
         width: 150px;
     }
-    
+    #client-plan tr td select {
+        padding: 8px;
+        width: 150px;
+        border: none;
+        color: #61fb89;
+        background-color: #000;
+    }
+    #client-plan tr td select option{
+        background-color: #5a5855;
+    }
     #client-plan tr td i {
         color: #61fb89;
         padding: 2px;
@@ -235,41 +244,49 @@
                         data:'regiao',
                        
                     },
-                    {  data:'regiao'
+                    {  data:'personalizar_1'
     
                     },
                     {
-                        data:'regiao',
+                        data:'personalizar_2',
                     },
                     {
-                        data:'regiao',
+                        data:'campanha',
                     },
                     {
-                        data:'regiao',
+                        data:'publico_alvo',
                     },
                     {
-                        data:'regiao',
+                        data:'objetivo',
                     },
                     {
-                        data:'regiao',
+                        data:'veiculo',
                     },
                     {
-                        data:'regiao',
+                        data:'canal',
                     },
                     {
-                        data:'regiao',
+                        data:'formatos',
                     },
                     {
-                        data:'regiao',
+                        data:'modelos_compra',
                     },
                     {
-                        data:'regiao',
+                        data:'periodo',
                     },
                     {
-                        data:'regiao',
+                        data:'investimento',
                     },
                     {
-                        data:'regiao',
+                        data:'acoes',
+                         render: function(data, type) {
+                         var icones = [];
+                         icones.push(
+                         `<i class='fas fa-clone duplicar'></i>
+                         <i class='fas fa-trash-alt delete'></i>` 
+                         )
+                         return butoes;
+                     }
                     },
                     
             ],   
@@ -371,53 +388,139 @@
                          )
                          return butoes;
                      }
-                 },
-                 
-             ]*/
-           
-        });
-        function getdrop(item){
-            console.log(item,'item')
-           let drop=    `<div class="dropdown">
-                            <input value='selecione' readonly="readonly" type="text" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">`
-                                item.map(function(i){
-                            drop+=`<a class="dropdown-item">${i}</a>`
+                    },
+                    
+                ]*/
+                
+            });
+       /* function ativeSelectLine(){
+                //marcar selecionadaos no dropdow
+            $( "select" ).each(function(j,index) {
+                    console.log(index,'index')
+                    index.addEventListener('change', function () {
+                    var selectedVal = $(`#${this.id} option:selected`).val();
+                    console.log(selectedVal,'selectedVal')
+                    console.log(this.id,'this.id')
+                    $(`#${this.id} > option`).each(function(l,index2){
+                            $(index2).removeAttr( "selected" )
+                    })
+                    $(`#${this.id} > option[value=${selectedVal.replace(/\s/g, '')}]`).attr("selected", 'selected')
+                    })
+            });
+        }
+        var select = document.querySelectorAll('select');
+        console.log(select)*/
+        function getdrop(item,id,index){
+           // console.log(index,'item')
+                let drop=    `<select name ="${id}-${index}" id="${id}-${index}" class="custom-select">`
+                                item.map(function(i,j){
+                                        drop+=`<option onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'> ${i}</option>`
                                 })
-                    drop+=`</div>
-                        </div>`
+                drop+=`</select>`
             return drop
         }
+        //adicionar linha
         $('#addRow').on('click', function () {
             $("table .dataTables_empty").hide()
-            var index = $("table tbody tr:last-child").index();
+            var index = $("#client-plan tbody tr:last-child").index();
+           // var linha = $("table tbody tr td");
+         //   console.log(index,'libha')
             var row = '<tr>' +
                         '<td><input type="text" class="form-control" name="regiao" id="regiao"></td>' +
                         '<td><input type="text" class="form-control" name="personalizar_1" id="personalizar_1"></td>' +
                         '<td><input type="text" class="form-control" name="personalizar_2" id="personalizar_2"></td>' +
                         '<td><input type="text" class="form-control" name="campanha" id="campanha"></td>' +
                         '<td><input type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td>' +
-                        '<td>'+ getdrop(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'])+'</td>'+
-                        '<td>'+ getdrop(['Google','Meta','Linkedin','Twitter','Personalizar'])+'</td>' +
-                        '<td>'+ getdrop(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'])+'</td>' +
-                        '<td>'+ getdrop(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'])+'</td>' +
-                        '<td>'+ getdrop(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'])+'</td>' +
+                        '<td>'+ getdrop(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',index)+'</td>'+
+                        '<td>'+ getdrop(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',index)+'</td>' +
+                        '<td>'+ getdrop(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'],'canal',index)+'</td>' +
+                        '<td>'+ getdrop(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'],'formatos',index)+'</td>' +
+                        '<td>'+ getdrop(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'],'modelos_de_compra',index)+'</td>' +
                         '<td><input type="text" class="form-control" name="periodo" id="periodo"></td>' +
                         '<td><input type="text" class="form-control" name="investimento" id="investimento"></td>' +
-                        `<td><i class='fas fa-clone '></i><i class='fas fa-trash-alt delete'></i></td>` +
+                        `<td><i class='fas fa-clone duplicar'></i><i class='fas fa-trash-alt delete'></i></td>` +
                     '</tr>';
             $("#client-plan").append(row);
-       
+           // ativeSelectLine()//ativar select drop
         })   
          // Delete row on delete button click
         $(document).on("click", ".delete", function(){
-            $(this).parents("tr").remove();
+            $(this).parents("tr").remove(); 
            /* $(".add-new").removeAttr("disabled");
             var id = $(this).attr("id");
             var string = id;
             $.post("ajax_delete.php", { string: string}, function(data) {
             $("#displaymessage").html(data);
             });*/
+        });
+        //atualizar o drop quando duplica
+        function getdropUp(item,id,index,select){
+           // console.log(index,'item')
+           let drop=    `<select name ="${id}-${index}" id="${id}-${index}" class="custom-select">`
+                                item.map(function(i,j){
+                                       if(i.replace(/\s/g, '') == select){
+                                        console.log(i,select,'teste')
+                                           drop+=`<option selected onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'> ${i}</option>`
+                                       }else{
+                                        drop+=`<option  onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'> ${i}</option>`
+                                       }
+                                })
+                    drop+=`</select>`
+            return drop
+        }
+        //duplica uma linha 
+        $(document).on("click", ".duplicar", function(){
+           let row
+           let texto
+           let selectName
+           let selectOption
+           let index
+           row = $(this).parents("tr").clone()
+           index = $("#client-plan tbody tr:last-child").index();
+           let linha = `<tr>`
+           for(let item of row[0].cells) {
+            //input
+                if(item.childNodes[0].type == 'text'){
+                       texto = $(`#${item.childNodes[0].id}`).val()
+                        linha+= `<td><input value ='${texto}'type="text" class="form-control" name='${item.childNodes[0].id}' id='${item.childNodes[0].id}'></td>`
+                }else{
+                    //select
+                    if(item.childNodes[0].type == 'select-one'){
+                        selectName = item.childNodes[0].id,
+                        resultado = selectName.split('-');
+                        selectOption = $(`#${item.childNodes[0].id} option:selected`).val()
+                     //   console.log(selectOption,'selectOption');
+                     //options para cada select
+                        switch (resultado[0])
+                        {
+                            case "objetivo":
+                                linha+=`<td>${getdropUp(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',index, selectOption)}</td>`
+                            break
+                            case "veiculo":
+                                linha+=`<td>${getdropUp(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',index, selectOption)}</td>`
+                                break;
+                            case "canal":
+                                linha+=`<td>${getdropUp(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'],'canal',index, selectOption)}</td>`
+                                break;
+                            case "formatos":
+                                linha+=`<td>${getdropUp(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'],'formatos',index, selectOption)}</td>`
+                                break;
+                            case "modelos_de_compra":
+                                linha+=`<td>${getdropUp(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'],'modelos_de_compra',index, selectOption)}</td>`
+                                break;
+                        }
+                    }
+                }
+           }
+            linha+=`<td><i class='fas fa-clone duplicar'></i><i class='fas fa-trash-alt delete'></i></td>`
+           linha+=`<tr>`
+            $("#client-plan").append(linha);
+
+          // ativeSelectLine()
+          // console.log($(this).parents("tr")).innerHTML;
+        //  row = document.getElementById("client-plan").rows[0].cells
+         //  $("#client-plan").append(row);
+           // $("#client-plan").appendChild(row)
         });
         
     })
