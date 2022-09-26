@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Organizacao;
+use App\Models\Plano;
 
 class PlanoController extends Controller
 {
@@ -22,16 +23,20 @@ class PlanoController extends Controller
        
     }*/
     protected $org;
+    protected $plano;
     public function __construct()
     {
         $org = new Organizacao();
         $this->org = $org;
+        $plano = new plano();
+        $this->plano = $plano;
     }
     public function index(Request $request)
     {
        $org = $this->org->getCliOrg($request->id_cliente);
      //  dd($org);
-        return view('org', compact('org'));
+        $idCliente = $request->id_cliente;
+        return view('org', compact('org','idCliente'));
     }
 
     public function getTableAjax(Request $request)
@@ -57,10 +62,75 @@ class PlanoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public static function  FormatarData($data){
+        $date = date_create(date($data));
+        $dataFinal = date_format($date, 'Y-m-d');
+        return $dataFinal;
+    }
     public function store(Request $request)
     {
-        //
+      
+        foreach ($request->dados as  $key=>$valor){
+             // var_dump($request->dados[$key][0]['value']);
+            $plano = Plano::firstOrNew(['id' => $request->dados[$key][0]['value']]); //verifica se o registo ja existe
+           //dd($plano);
+            foreach ($valor as $item){
+                $pieces = explode("*", $item['name']);
+              // dd($pieces[1]);
+                switch ($pieces[0]) {
+                    case 'regiao':
+                        $plano->regiao = $item['value'];
+                        break;
+                    case 'personalizar_1':
+                        $plano->persornalizar_1 = $item['value'];
+                        break;
+                    case 'personalizar_2':
+                        $plano->personalizar_2 = $item['value'];
+                        break;
+                    case 'campanha':
+                        $plano->campanha = $item['value'];
+                        break;
+                    case 'campanha':
+                        $plano->campanha = $item['value'];
+                        break;
+                    case 'publico_alvo':
+                        $plano->publico_alvo = $item['value'];
+                        break;
+                    case 'objetivo':
+                        $plano->objetivo = $item['value'].'*'.$pieces[1];
+                        break;
+                    case 'veiculo':
+                        $plano->veiculo = $item['value'].'*'.$pieces[1];
+                        break;
+                    case 'canal':
+                        $plano->canal = $item['value'].'*'.$pieces[1];
+                        break;
+                    case 'formatos':
+                        $plano->formatos = $item['value'].'*'.$pieces[1];
+                        break;
+                    case 'periodo':
+                        $plano->periodo = $item['value'];
+                        break;
+                    case 'modelos_de_compra':
+                        $plano->modelos_compra = $item['value'].'*'.$pieces[1];
+                        break;
+                    case 'investimento':
+                        $plano->investimento =  floatval($item['value']);
+                        break;
+                     default:
+
+                    }
+            $plano->fk_cliente = 1;
+            //  $plano->personalizar = $valor['name'] == "regiao" ? $valor['value'] : '';
+        }
+        $plano->save();
+       // dd($plano);
+       // foreach($request )
+       /* $plano = Plano::firstOrNew(['id' => $dado->codigo_ibge]); //verifica se o registo ja existe
+       $result =  $this->plano->create($request->data);
+       dd($result);*/
     }
+}
 
     /**
      * Display the specified resource.
@@ -68,9 +138,11 @@ class PlanoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show(Request $request)
+    {   //dd($request->id);
+        $plano = Plano::where('fk_cliente', $request->id)
+               ->get();
+        return $plano;
     }
 
     /**

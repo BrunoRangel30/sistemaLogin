@@ -180,48 +180,70 @@
                 </table>
             </div>
             <div class="col-md-10 col-lg-10 table-responsive" style="padding-left: 5px;">
-                <table id="client-plan" class="table table-bordered cabecalho-table ">
-                    <div class="botoes-table">
-                        <button id="addRow" type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Add Linha</b></button>
-                        <button type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Consolidar</b></button>
-                        <button type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Salvar</b></button>
-                    </div>
-                    <thead>
-                        <tr>
-                            <th>Regiao</th>
-                            <th>Personalizar 1</th>
-                            <th>Personalizar 2</th>
-                            <th>Campanha</th>
-                            <th>Publico-alvo</th>
-                            <th>Objetivo</th>
-                            <th>Veículo</th>
-                            <th>Canal</th>
-                            <th>Formatos</th>
-                            <th>Modelos de Compra</th>
-                            <th>Período</th>
-                            <th>Investimento</th>
-                            <th>Ações</th>
-                        </tr>
-                        <tbody>
-                        </tbody>
-                    </thead>
-                </table>
+                <form class="table-form" action="" method="post">
+                    <table id="client-plan" class="table table-bordered cabecalho-table ">
+                        <div class="botoes-table">
+                            <button id="addRow" type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Add Linha</b></button>
+                            <button type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Consolidar</b></button>
+                            <button id="salvarDados" type="submit" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Salvar</b></button>
+                        </div>
+                        <thead>
+                            <tr>
+                                <th>Regiao</th>
+                                <th>Personalizar 1</th>
+                                <th>Personalizar 2</th>
+                                <th>Campanha</th>
+                                <th>Publico-alvo</th>
+                                <th>Objetivo</th>
+                                <th>Veículo</th>
+                                <th>Canal</th>
+                                <th>Formatos</th>
+                                <th>Modelos de Compra</th>
+                                <th>Período</th>
+                                <th>Investimento</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </form>
             </div>
         </div>
     </div>
     <input id="data-route-url-table" type="hidden" data-route-url-table="{{ route('planoTable') }}">
+    <input id="data-route-url-post-table" type="hidden" data-route-url-post-table="{{ route('planoTableStore') }}">
     <input id="data-cliente-id" type="hidden" data-cliente-id="{{ $org->fk_cliente }}">
+    <input id="show-table" type="hidden" show-table="{{ route('showTable') }}">
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 </div>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" integrity="" crossorigin="anonymous">
 
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" integrity="" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" integrity="" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.25.2/minified.js" integrity="sha512-yHLAgovfc/zAwDgU0iMrEg2NtpJJctpOFIAHVpqVm7qOumLjLi9LhX7gvOwZp7sn70yjpP+BqxUGmV+J3fdIVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
+    function selectFunction(dados){
+        let option = $( `#${dados.id} option:selected` ).text()
+        input = ''
+        let name
+       // console.log(option,'opt')
+        if(option == 'Personalizar' ){
+            name = dados.id.split('-')
+            //retirar o dropdow
+            $(`#table-${dados.id} select`).removeAttr('name')
+             $(`#table-${dados.id} select`).hide()
+             //colocar o input
+             input = `<input type="text" class="form-control" name="${name[0]}*input">`
+             $(`#table-${dados.id}`).append(input)
+            //botao de voltar para o drop
+        }
+        
+    }
     $(document).ready(function() {
           let url = $("#data-route-url-table").attr('data-route-url-table')
           id = $("#data-cliente-id").attr('data-cliente-id')
-        var table = $('#client-plan').DataTable({
+      /*  var table = $('#client-plan').DataTable({
             searching: "false",
             paging: false,
             "processing": true,
@@ -230,7 +252,7 @@
             "language": {
                 "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
             },
-           /* order: [[2, 'asc']],*/
+           /* order: [[2, 'asc']],
             "ajax": {
                 "url": url,
                 "type": "POST",
@@ -390,7 +412,7 @@
                      }
                     },
                     
-                ]*/
+                ]
                 
             });
        /* function ativeSelectLine(){
@@ -410,11 +432,60 @@
         }
         var select = document.querySelectorAll('select');
         console.log(select)*/
+        //variaveis globais
+        var idTable = 0
+        function getDataSppinner(url,data,div) {
+                //console.log(data,'data')
+                return new Promise(function(resolve, reject) {
+                    return request = $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN':  $("input[name=_token]").val()
+                        },
+                        type: 'POST',
+                        // dataType: 'json',
+                        url: url,
+                        beforeSend: function(){
+                           // $(div.sppinner).show();
+                           // $(div.div).hide();
+                        },   
+                        complete: function(){
+                            //$(div.sppinner).hide();
+                            //$(div.div).show();
+                        },
+                        data: data,
+                        success: resolve,
+                        error: reject
+                    });
+                });
+        } 
+       //salvar as linhas
+        $( ".table-form" ).submit(function( event ) {
+            let url = $("#data-route-url-post-table").attr('data-route-url-post-table')
+            let data = $( this ).serializeArray()
+            console.log(data,)
+            event.preventDefault();
+            result2 = []
+            data.forEach(function(element) {
+                if(element['name'] == 'id')
+                result2.push([])
+                result2[result2.length - 1].push(element)
+            })
+           let payload = {
+                dados: result2
+            }
+            resultAjax = getDataSppinner(url,payload,'')//grava no banco
+            resultAjax.then(function(){
+                console.log('teste')
+                povoarTable() //renderiza a tabela
+            })
+      
+        });
+        
         function getdrop(item,id,index){
            // console.log(index,'item')
-                let drop=    `<select name ="${id}-${index}" id="${id}-${index}" class="custom-select">`
+                let drop=    `<select onchange="selectFunction(this)" name ="${id}*select" id="${id}-${index}" class="custom-select">`
                                 item.map(function(i,j){
-                                        drop+=`<option onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'> ${i}</option>`
+                                        drop+=`<option onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'>${i}</option>`
                                 })
                 drop+=`</select>`
             return drop
@@ -422,25 +493,29 @@
         //adicionar linha
         $('#addRow').on('click', function () {
             $("table .dataTables_empty").hide()
-            var index = $("#client-plan tbody tr:last-child").index();
+            var index = $("#client-plan tbody tr:last-child").index() ;
+            idTable += 1;
+            console.log(index,'index')
            // var linha = $("table tbody tr td");
          //   console.log(index,'libha')
             var row = '<tr>' +
+                        '<input type="hidden"  name="id" value='+ idTable +'>' +
                         '<td><input type="text" class="form-control" name="regiao" id="regiao"></td>' +
                         '<td><input type="text" class="form-control" name="personalizar_1" id="personalizar_1"></td>' +
                         '<td><input type="text" class="form-control" name="personalizar_2" id="personalizar_2"></td>' +
                         '<td><input type="text" class="form-control" name="campanha" id="campanha"></td>' +
                         '<td><input type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td>' +
-                        '<td>'+ getdrop(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',index)+'</td>'+
-                        '<td>'+ getdrop(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',index)+'</td>' +
-                        '<td>'+ getdrop(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'],'canal',index)+'</td>' +
-                        '<td>'+ getdrop(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'],'formatos',index)+'</td>' +
-                        '<td>'+ getdrop(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'],'modelos_de_compra',index)+'</td>' +
+                        '<td id="table-objetivo-'+idTable+'">'+ getdrop(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',idTable)+'</td>'+
+                        '<td>'+ getdrop(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',idTable)+'</td>' +
+                        '<td>'+ getdrop(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'],'canal',idTable)+'</td>' +
+                        '<td>'+ getdrop(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'],'formatos',idTable)+'</td>' +
+                        '<td>'+ getdrop(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'],'modelos_de_compra',idTable)+'</td>' +
                         '<td><input type="text" class="form-control" name="periodo" id="periodo"></td>' +
                         '<td><input type="text" class="form-control" name="investimento" id="investimento"></td>' +
                         `<td><i class='fas fa-clone duplicar'></i><i class='fas fa-trash-alt delete'></i></td>` +
                     '</tr>';
             $("#client-plan").append(row);
+            
            // ativeSelectLine()//ativar select drop
         })   
          // Delete row on delete button click
@@ -456,13 +531,13 @@
         //atualizar o drop quando duplica
         function getdropUp(item,id,index,select){
            // console.log(index,'item')
-           let drop=    `<select name ="${id}-${index}" id="${id}-${index}" class="custom-select">`
+           let drop=    `<select onchange="selectFunction(this)" name ="${id}*select" id="${id}-${index}" class="custom-select">`
                                 item.map(function(i,j){
                                        if(i.replace(/\s/g, '') == select){
                                         console.log(i,select,'teste')
-                                           drop+=`<option selected onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'> ${i}</option>`
+                                           drop+=`<option selected onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'>${i}</option>`
                                        }else{
-                                        drop+=`<option  onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'> ${i}</option>`
+                                        drop+=`<option  onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'>${i}</option>`
                                        }
                                 })
                     drop+=`</select>`
@@ -477,12 +552,17 @@
            let index
            row = $(this).parents("tr").clone()
            index = $("#client-plan tbody tr:last-child").index();
-           let linha = `<tr>`
+           console.log(index,'indexantido')
+            idTable += 1;
+            console.log(row[0].cells,'clome')
+         // console.log(idTable,'idTable')
+           let linha = `<tr> <input type="hidden"  name="id" value='${idTable}'>`
            for(let item of row[0].cells) {
             //input
-                if(item.childNodes[0].type == 'text'){
-                       texto = $(`#${item.childNodes[0].id}`).val()
-                        linha+= `<td><input value ='${texto}'type="text" class="form-control" name='${item.childNodes[0].id}' id='${item.childNodes[0].id}'></td>`
+            if(item.childNodes[0].type == 'text'){
+                texto = $(`#${item.childNodes[0].id}`).val()
+                        linha+= `<td>
+                            <input value ='${texto}'type="text" class="form-control" name='${item.childNodes[0].id}' id='${item.childNodes[0].id}'></td>`
                 }else{
                     //select
                     if(item.childNodes[0].type == 'select-one'){
@@ -494,35 +574,93 @@
                         switch (resultado[0])
                         {
                             case "objetivo":
-                                linha+=`<td>${getdropUp(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',index, selectOption)}</td>`
+                                linha+=`<td  id="table-objetivo-${idTable}">${getdropUp(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',idTable, selectOption)}</td>`
                             break
                             case "veiculo":
-                                linha+=`<td>${getdropUp(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',index, selectOption)}</td>`
+                                linha+=`<td>${getdropUp(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',idTable, selectOption)}</td>`
                                 break;
                             case "canal":
-                                linha+=`<td>${getdropUp(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'],'canal',index, selectOption)}</td>`
+                                linha+=`<td>${getdropUp(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'],'canal',idTable, selectOption)}</td>`
                                 break;
                             case "formatos":
-                                linha+=`<td>${getdropUp(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'],'formatos',index, selectOption)}</td>`
+                                linha+=`<td>${getdropUp(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'],'formatos',idTable, selectOption)}</td>`
                                 break;
                             case "modelos_de_compra":
-                                linha+=`<td>${getdropUp(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'],'modelos_de_compra',index, selectOption)}</td>`
+                                linha+=`<td>${getdropUp(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'],'modelos_de_compra',idTable, selectOption)}</td>`
                                 break;
                         }
                     }
                 }
            }
-            linha+=`<td><i class='fas fa-clone duplicar'></i><i class='fas fa-trash-alt delete'></i></td>`
+           linha+=`<td><i class='fas fa-clone duplicar'></i><i class='fas fa-trash-alt delete'></i></td>`
            linha+=`<tr>`
-            $("#client-plan").append(linha);
-
-          // ativeSelectLine()
-          // console.log($(this).parents("tr")).innerHTML;
-        //  row = document.getElementById("client-plan").rows[0].cells
-         //  $("#client-plan").append(row);
-           // $("#client-plan").appendChild(row)
+            $("#client-plan").append(linha);//insere a linha
         });
+        //constroi a tabela com os dados do banco
+        function construirHtmltable(item){
+            let type
+            //objtivo
+            type  = item.objetivo.split("*")
+            type[1] == 'select'  ?  objetivo = getdropUp(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',item.id,type[0]) : '<input value="'+item.objetivo+'" name="objetivo*input" type="text" class="form-control">'
+            //veiculo
+            type2  = item.veiculo.split("*")
+            type2[1] == 'select' ? veiculo = getdropUp(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',item.id, type2[0]) : '<input value="'+item.veiculo+'" name="veiculo*input" type="text" class="form-control">'
+            //canal
+            type3= item.canal.split("*")
+            type3[1] == 'select' ? canal = getdropUp(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'],'canal',item.id,type3[0]) : '<input value="'+item.canal+'" name="canal*input" type="text" class="form-control">'
+            //formatos
+            type4 = item.formatos.split("*")
+            type4[1] = 'select' ? formato = getdropUp(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'],'formatos',item.id, type4[0]) : '<input value="'+item.formatos+'" name="formatos*input" type="text" class="form-control">'
+            //modelos de compra
+            type5 = item.modelos_compra.split("*")
+            type5[1] = 'select' ?  modelo = getdropUp(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'],'modelos_de_compra',item.id, type5[0]) : '<input value="'+item.modelos_compra+'" name="modelos_compra*input" type="text" class="form-control">'
+            var   row = '<tr>' +
+                            '<input type="hidden"  name="id" value='+item.id+'>'+
+                            '<td><input value="'+item.regiao+'" type="text" class="form-control" name="regiao" id="regiao"></td>' +
+                            '<td><input value="'+item.persornalizar_1+'" type="text" class="form-control" name="personalizar_1" id="personalizar_1"></td>' +
+                            '<td><input value="'+item.personalizar_2+'" type="text" class="form-control" name="personalizar_2" id="personalizar_2"></td>' +
+                            '<td><input value="'+item.campanha+'" type="text" class="form-control" name="campanha" id="campanha"></td>' +
+                            '<td><input value="'+item.publico_alvo+'" type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td>' +
+                            '<td id="table-objetivo-'+item.id+'">'+objetivo+'</td>'+
+                            '<td id="table-veiculo-'+item.id+'">'+veiculo+'</td>'+
+                            '<td id="table-canal-'+item.id+'">'+canal+'</td>'+
+                            '<td id="table-formatos-'+item.id+'">'+formato+'</td>'+
+                            '<td id="table-modelos_de_compra-'+item.id+'">'+modelo+'</td>'+
+                            '<td><input value="'+item.periodo+'" type="text" class="form-control" name="periodo" id="periodo"></td>' +
+                            '<td><input value="'+item.investimento+'" type="text" class="form-control" name="investimneto" id="investimento"></td>' +
+                            '<td><i class="fas fa-clone duplicar"></i><i class="fas fa-trash-alt"></i></td>'+
+                        '</tr>';
+            return row;
+        }
+        function povoarTable(){
+            //chamar o ajax
+            let idCli = $("#data-cliente-id").attr('data-cliente-id')
+            let url = $("#show-table").attr('show-table')
+            data = {
+                id :idCli
+            }
+            result = getDataSppinner(url,data,'')
+            result.then(function(data){
+                data.length == 0 ?  idTable = 0 : idTable= data.length //retorna a quantidade de linhas do banco
+                //Limpar a tabela
+                $('#client-plan tbody > tr').remove();
+                if(data.length > 0){
+                    data.map(function(item,j){
+                        console.log(item,'item')
+                        //construir uma funcao o hml para cada
+                        resultRow = construirHtmltable(item)
+                        $("#client-plan").append(resultRow);//insere a linha
+                    })
+                }
+                //ler os dados separando os types
+                //atribuir na tabela  
+               // console.log(data, 'data')
+            })
+           
+        }
+        povoarTable()
         
     })
+    
 </script>
 @endsection
