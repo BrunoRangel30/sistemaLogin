@@ -511,7 +511,7 @@
                         '<td>'+ getdrop(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'],'formatos',idTable)+'</td>' +
                         '<td>'+ getdrop(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'],'modelos_de_compra',idTable)+'</td>' +
                         '<td><input type="text" class="form-control" name="periodo" id="periodo"></td>' +
-                        '<td><input type="text" class="form-control" name="investimento" id="investimento"></td>' +
+                        '<td><input type="text" class="form-control" name="investimneto" id="investimneto"></td>' +
                         `<td><i class='fas fa-clone duplicar'></i><i class='fas fa-trash-alt delete'></i></td>` +
                     '</tr>';
             $("#client-plan").append(row);
@@ -718,6 +718,7 @@
                 var customerId10 = $(this).find("td").eq(9); //modelos
                 var customerId11 = $(this).find("td").eq(10).html();  //periodo
                 var customerId12 = $(this).find("td").eq(11).html();  //investimento
+                console.log(customerId6,'dsd')
                 select6 = $(`#${customerId6[0].childNodes[0].id} option:selected`).val();
                 select7 = $(`#${customerId7[0].childNodes[0].id} option:selected`).val();
                 select8 = $(`#${customerId8[0].childNodes[0].id} option:selected`).val();
