@@ -76,7 +76,7 @@ class PlanoController extends Controller
            //dd($plano);
             foreach ($valor as $item){
                 $pieces = explode("*", $item['name']);
-              // dd($pieces[1]);
+              var_dump($pieces[0]);
                 switch ($pieces[0]) {
                     case 'regiao':
                         $plano->regiao = $item['value'];
@@ -114,7 +114,7 @@ class PlanoController extends Controller
                     case 'modelos_de_compra':
                         $plano->modelos_compra = $item['value'].'*'.$pieces[1];
                         break;
-                    case 'investimento':
+                    case 'investimneto':
                         $plano->investimento =  floatval($item['value']);
                         break;
                      default:

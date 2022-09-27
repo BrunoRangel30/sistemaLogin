@@ -184,7 +184,7 @@
                     <table id="client-plan" class="table table-bordered cabecalho-table ">
                         <div class="botoes-table">
                             <button id="addRow" type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Add Linha</b></button>
-                            <button type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Consolidar</b></button>
+                            <button id="consolidar" type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Consolidar</b></button>
                             <button id="salvarDados" type="submit" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Salvar</b></button>
                         </div>
                         <thead>
@@ -222,6 +222,7 @@
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" integrity="" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.25.2/minified.js" integrity="sha512-yHLAgovfc/zAwDgU0iMrEg2NtpJJctpOFIAHVpqVm7qOumLjLi9LhX7gvOwZp7sn70yjpP+BqxUGmV+J3fdIVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js" integrity="sha512-2V49R8ndaagCOnwmj8QnbT1Gz/rie17UouD9Re5WxbzRVUGoftCu5IuqqtAM9+UC3fwfHCSJR1hkzNQh/2wdtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     function selectFunction(dados){
         let option = $( `#${dados.id} option:selected` ).text()
@@ -475,7 +476,6 @@
             }
             resultAjax = getDataSppinner(url,payload,'')//grava no banco
             resultAjax.then(function(){
-                console.log('teste')
                 povoarTable() //renderiza a tabela
             })
       
@@ -534,7 +534,7 @@
            let drop=    `<select onchange="selectFunction(this)" name ="${id}*select" id="${id}-${index}" class="custom-select">`
                                 item.map(function(i,j){
                                        if(i.replace(/\s/g, '') == select){
-                                        console.log(i,select,'teste')
+                                       // console.log(i,select,'teste')
                                            drop+=`<option selected onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'>${i}</option>`
                                        }else{
                                         drop+=`<option  onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'>${i}</option>`
@@ -646,7 +646,7 @@
                 $('#client-plan tbody > tr').remove();
                 if(data.length > 0){
                     data.map(function(item,j){
-                        console.log(item,'item')
+                        //console.log(item,'item')
                         //construir uma funcao o hml para cada
                         resultRow = construirHtmltable(item)
                         $("#client-plan").append(resultRow);//insere a linha
@@ -659,6 +659,123 @@
            
         }
         povoarTable()
+        function construirHtmltableConsolidado(item){
+                console.log(item,'funcao')
+              //  var row
+                var rowTotal
+                Object.keys(item, function(item,j){
+                    console.log('çsldk')
+                    item.linhas.map(function(bruno,k){
+                        console.log(bruno,'item')
+                    })
+                })
+                 _.mapObject(item, function(value,key){
+                  //  console.log(value,'value')
+                     value.linhas.map(function(item,j){
+                        console.log(item,'item')
+                     var  row = '<tr>' +
+                            //'<input type="hidden"  name="id" value='+item.id+'>'+
+                            '<td><input value="'+item.regiao+'" type="text" class="form-control" name="regiao" id="regiao"></td>' +
+                            '<td><input value="'+item.personalizar_1+'" type="text" class="form-control" name="personalizar_1" id="personalizar_1"></td>' +
+                            '<td><input value="'+item.personalizar_2+'" type="text" class="form-control" name="personalizar_2" id="personalizar_2"></td>' +
+                            '<td><input value="'+item.campanha+'" type="text" class="form-control" name="campanha" id="campanha"></td>' +
+                            '<td><input value="'+item.publico_alvo+'" type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td>' +
+                            '<td ><input value="'+item.ojetivo+'" type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td></td>'+
+                            '<td><input value="'+item.veiculo+'" type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td></td>'+
+                            '<td ><input value="'+item.canal+'" type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td></td>'+
+                            '<td><input value="'+item.formatos+'" type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td></td>'+
+                            '<td><input value="'+item.modelos+'" type="text" class="form-control" name="periodo" id="periodo"></td>' +
+                            '<td><input value="'+item.periodo+'" type="text" class="form-control" name="investimneto" id="investimento"></td>' +
+                            '<td><input value="'+item.investimento+'" type="text" class="form-control" name="investimneto" id="investimento"></td>' +
+                            '<td><i class="fas fa-clone duplicar"></i><i class="fas fa-trash-alt"></i></td>'+
+                          //  return row;
+                           // console.log(index,'index')
+                           '</tr>'+
+                           console.log()
+                           $("#client-plan").append(row);//insere a linha
+                        })
+                       var rowTotal = '<tr>'+'<td style="color: #FFFF"> Total  ' +value.total+'</td>'+'</tr>'
+                        $("#client-plan").append(rowTotal);//insere a linha
+                       // '<tr>'+'<td style="color: #FFFF"> '+value.total+'</td>'+'</tr>'
+                   // row,'row')
+                 //  return row
+                 })
+               // console.log(row,'row')
+                // return row
+        }
+        $(document).on("click", "#consolidar", function(){
+            var arrData =[]
+              $('#client-plan tbody tr').each(function(){
+                var customerId = $(this).find("td").eq(0).html();  //regiao
+                var customerId2 = $(this).find("td").eq(1).html(); //personalizar_1'
+                var customerId3 = $(this).find("td").eq(2).html();  //persornalizar_2
+                var customerId4 = $(this).find("td").eq(3).html();  //campanha
+                var customerId5 = $(this).find("td").eq(4).html();  //publico
+                var customerId6 = $(this).find("td").eq(5); //objetivo
+                var customerId7 = $(this).find("td").eq(6); //veiculo
+                var customerId8 = $(this).find("td").eq(7); //canal
+                var customerId9 = $(this).find("td").eq(8); //formatos
+                var customerId10 = $(this).find("td").eq(9); //modelos
+                var customerId11 = $(this).find("td").eq(10).html();  //periodo
+                var customerId12 = $(this).find("td").eq(11).html();  //investimento
+                select6 = $(`#${customerId6[0].childNodes[0].id} option:selected`).val();
+                select7 = $(`#${customerId7[0].childNodes[0].id} option:selected`).val();
+                select8 = $(`#${customerId8[0].childNodes[0].id} option:selected`).val();
+                select9 = $(`#${customerId9[0].childNodes[0].id} option:selected`).val();
+                select10 = $(`#${customerId10[0].childNodes[0].id} option:selected`).val();
+                //console.log($(`${customerId6} option:selected`).text(),'6')
+                var obj={};
+                  obj.regiao=$(customerId).val();
+                  obj.personalizar_1=$(customerId2).val();
+                  obj.personalizar_2=$(customerId3).val();
+                  obj.campanha=$(customerId4).val();
+                  obj.publico_alvo=$(customerId5).val();
+                  obj.ojetivo= select6;
+                  obj.veiculo= select7;
+                  obj.canal= select8;
+                  obj.formatos= select9;
+                  obj.modelos= select10;
+                  obj.periodo=$(customerId11).val();
+                  obj.investimento=$(customerId12).val();
+                  arrData.push(obj);
+              })  
+             // console.log(arrData,'arrData')
+                       /* var types = _.groupBy(arrData, 'canal');
+                       // console.log(types);
+                        var result = {};
+                        _.each(types, function(val, key) {
+                           // console.log(val,'val')
+                           return [key, _.reduce(val, function(result, currentObject) {
+                                return {
+                                    total: result.investimento + currentObject.investimento,
+                                   // numOfPeople: result.numOfPeople + currentObject.numOfPeople
+                                }
+                                }, 
+                                {
+                                    total: 0,
+                                   // numOfPeople: 0
+                                }
+                            )];
+                        });*/
+                        var sum = function(t, n) { return parseInt(t) + parseInt(n); };
+                        var result2 = _.mapObject(
+                            _.groupBy(arrData, 'canal'),
+                            function(values, canal) {
+                                return {
+                                    total: _.reduce(_.pluck(values, 'investimento'), sum, 0),
+                                    linhas: values
+                                };
+                            }
+                        );
+                         //Limpar a tabela
+                        $('#client-plan tbody > tr').remove();
+                       construirHtmltableConsolidado(result2);
+                        // $("#client-plan").append(construirHtmltableConsolidado(result2));//insere a linha
+                       // construirHtmltableConsolidado(result2)
+                      //  console.log(result2,'types')
+                       // console.log(types,'types')
+                        
+        })
         
     })
     
