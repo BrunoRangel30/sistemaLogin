@@ -190,8 +190,8 @@
                         <thead>
                             <tr>
                                 <th>Regiao</th>
-                                <th><input  type="text" class="form-control" id="personalizar1-col"></th>
-                                <th><input  type="text" class="form-control" id="personalizar2-col"></th>
+                                <th><input  type="text"  id="personalizar1-col"></th>
+                                <th><input  type="text"  id="personalizar2-col"></th>
                                 <th>Campanha</th>
                                 <th>Publico-alvo</th>
                                 <th>Objetivo</th>
@@ -233,9 +233,10 @@
             name = dados.id.split('-')
             //retirar o dropdow
             $(`#table-${dados.id} select`).removeAttr('name')
-             $(`#table-${dados.id} select`).hide()
+             $(`#table-${dados.id} select`).remove()
              //colocar o input
-             input = `<input type="text" class="form-control" name="${name[0]}*input">`
+             input = `<input type="text" class="form-control" name="${name[0]}*input"><i class="fas fa-undo"></i>`
+            
              $(`#table-${dados.id}`).append(input)
             //botao de voltar para o drop
         }
@@ -432,8 +433,7 @@
         function construirHtmltable(item){
             //console.log(item,'iem')
             let type
-           // let veiculo
-            //objtivo
+            //objetivo
             type  = item.objetivo.split("*")
             type[1] == 'select'  ?  objetivo = getdropUp(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',item.id,type[0]) : '<input value="'+type[0]+'" name="objetivo*input" type="text" class="form-control">'
             //veiculo
@@ -545,58 +545,42 @@
         $(document).on("click", "#consolidar", function(){
             var arrData =[]
               $('#client-plan tbody tr').each(function(){
-                var customerId = $(this).find("td").eq(0).html();  //regiao
-                var customerId2 = $(this).find("td").eq(1).html(); //personalizar_1'
-                var customerId3 = $(this).find("td").eq(2).html();  //persornalizar_2
-                var customerId4 = $(this).find("td").eq(3).html();  //campanha
-                var customerId5 = $(this).find("td").eq(4).html();  //publico
+                var customerId = $(this).find("td").eq(0);  //regiao
+                var customerId2 = $(this).find("td").eq(1); //personalizar_1'
+                var customerId3 = $(this).find("td").eq(2);  //persornalizar_2
+                var customerId4 = $(this).find("td").eq(3);  //campanha
+                var customerId5 = $(this).find("td").eq(4);  //publico
                 var customerId6 = $(this).find("td").eq(5); //objetivo
                 var customerId7 = $(this).find("td").eq(6); //veiculo
                 var customerId8 = $(this).find("td").eq(7); //canal
                 var customerId9 = $(this).find("td").eq(8); //formatos
                 var customerId10 = $(this).find("td").eq(9); //modelos
-                var customerId11 = $(this).find("td").eq(10).html();  //periodo
-                var customerId12 = $(this).find("td").eq(11).html();  //investimento
-                console.log(customerId4,'dsd')
-                select6 = $(`#${customerId6[0].childNodes[0].id} option:selected`).val();
-                select7 = $(`#${customerId7[0].childNodes[0].id} option:selected`).val();
-                select8 = $(`#${customerId8[0].childNodes[0].id} option:selected`).val();
-                select9 = $(`#${customerId9[0].childNodes[0].id} option:selected`).val();
-                select10 = $(`#${customerId10[0].childNodes[0].id} option:selected`).val();
-                //console.log($(`${customerId6} option:selected`).text(),'6')
+                var customerId11 = $(this).find("td").eq(10);  //periodo
+                var customerId12 = $(this).find("td").eq(11);  //investimento
+                console.log($(customerId[0].childNodes[0]).val() ,'teste')
+                customerId6[0].childNodes[0].type == 'text' ? select6 = $(customerId6[0].childNodes[0]).val()  : select6 = $(`#${customerId6[0].childNodes[0].id} option:selected`).val() ; //objetivo
+                customerId7[0].childNodes[0].type == 'text' ? select7 = $(customerId7[0].childNodes[0]).val()  : select7 = $(`#${customerId7[0].childNodes[0].id} option:selected`).val() ; //veiculo
+                customerId8[0].childNodes[0].type == 'text' ? select8 = $(customerId8[0].childNodes[0]).val()  : select8 = $(`#${customerId8[0].childNodes[0].id} option:selected`).val() ; //canal
+                customerId9[0].childNodes[0].type == 'text' ? select9 = $(customerId9[0].childNodes[0]).val()  : select9 = $(`#${customerId9[0].childNodes[0].id} option:selected`).val() ; //formatos
+                customerId10[0].childNodes[0].type == 'text' ? select10 = $(customerId10[0].childNodes[0]).val()  : select10 = $(`#${customerId10[0].childNodes[0].id} option:selected`).val() ; //modelo de compra
+              
                 var obj={};
-                  obj.regiao=$(customerId).val();
-                  obj.personalizar_1=$(customerId2).val();
-                  obj.personalizar_2=$(customerId3).val();
-                  obj.campanha=$(customerId4).val();
-                  obj.publico_alvo=$(customerId5).val();
+                  obj.regiao= $(customerId[0].childNodes[0]).val()
+                  obj.personalizar_1= $(customerId2[0].childNodes[0]).val()
+                  obj.personalizar_2= $(customerId3[0].childNodes[0]).val()
+                  obj.campanha=$(customerId4[0].childNodes[0]).val();
+                  obj.publico_alvo=$(customerId5[0].childNodes[0]).val();
                   obj.ojetivo= select6;
                   obj.veiculo= select7;
                   obj.canal= select8;
                   obj.formatos= select9;
                   obj.modelos= select10;
-                  obj.periodo=$(customerId11).val();
-                  obj.investimento=$(customerId12).val();
+                  obj.periodo=$(customerId11[0].childNodes[0]).val();
+                  obj.investimento=$(customerId12[0].childNodes[0]).val();
+                  console.log('obj')
                   arrData.push(obj);
               })  
-             // console.log(arrData,'arrData')
-                       /* var types = _.groupBy(arrData, 'canal');
-                       // console.log(types);
-                        var result = {};
-                        _.each(types, function(val, key) {
-                           // console.log(val,'val')
-                           return [key, _.reduce(val, function(result, currentObject) {
-                                return {
-                                    total: result.investimento + currentObject.investimento,
-                                   // numOfPeople: result.numOfPeople + currentObject.numOfPeople
-                                }
-                                }, 
-                                {
-                                    total: 0,
-                                   // numOfPeople: 0
-                                }
-                            )];
-                        });*/
+         
                         var sum = function(t, n) { return parseInt(t) + parseInt(n); };
                         var result2 = _.mapObject(
                             _.groupBy(arrData, 'canal'),
