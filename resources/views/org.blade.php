@@ -190,8 +190,8 @@
                         <thead>
                             <tr>
                                 <th>Regiao</th>
-                                <th>Personalizar 1</th>
-                                <th>Personalizar 2</th>
+                                <th><input  type="text" class="form-control" id="personalizar1-col"></th>
+                                <th><input  type="text" class="form-control" id="personalizar2-col"></th>
                                 <th>Campanha</th>
                                 <th>Publico-alvo</th>
                                 <th>Objetivo</th>
@@ -244,196 +244,7 @@
     $(document).ready(function() {
           let url = $("#data-route-url-table").attr('data-route-url-table')
           id = $("#data-cliente-id").attr('data-cliente-id')
-      /*  var table = $('#client-plan').DataTable({
-            searching: "false",
-            paging: false,
-            "processing": true,
-            searching: false,
-            info: false,
-            "language": {
-                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
-            },
-           /* order: [[2, 'asc']],
-            "ajax": {
-                "url": url,
-                "type": "POST",
-                'data': function (d) {
-                        d._token = $("input[name=_token]").val();
-                        d.id = id
-                }
-            },
-            "columns":[
-                    {
-                        data:'regiao',
-                       
-                    },
-                    {  data:'personalizar_1'
-    
-                    },
-                    {
-                        data:'personalizar_2',
-                    },
-                    {
-                        data:'campanha',
-                    },
-                    {
-                        data:'publico_alvo',
-                    },
-                    {
-                        data:'objetivo',
-                    },
-                    {
-                        data:'veiculo',
-                    },
-                    {
-                        data:'canal',
-                    },
-                    {
-                        data:'formatos',
-                    },
-                    {
-                        data:'modelos_compra',
-                    },
-                    {
-                        data:'periodo',
-                    },
-                    {
-                        data:'investimento',
-                    },
-                    {
-                        data:'acoes',
-                         render: function(data, type) {
-                         var icones = [];
-                         icones.push(
-                         `<i class='fas fa-clone duplicar'></i>
-                         <i class='fas fa-trash-alt delete'></i>` 
-                         )
-                         return butoes;
-                     }
-                    },
-                    
-            ],   
-            rowGroup: {
-                endRender: function ( rows, group ) {
-                    var avg = rows
-                        .data()
-                        .pluck(5)
-                        .reduce( function (a, b) {
-                            return a + b.replace(/[^\d]/g, '')*1;
-                        }, 0) / rows.count();
-    
-                    return 'Average salary in '+group+': '+
-                        $.fn.dataTable.render.number(',', '.', 0, '$').display( avg );
-                },
-                dataSrc: 2
-            }
-
-            /* "ajax": {
-                 "url": url,
-                 "type": "GET",
-                 
-             },
-            paging: false,
-            headers: {
-                'X-CSRF-Token': $('input[name="_token"]').val()
-            },
-            ordering: false,
-            "processing": true,
-            "language": {
-                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
-            },
-            /* "columns":[
-                 {
-                     data:'status',
-                 },
-                 {
-                     data:'id_pagamento',
-                 },
-                 {
-                     data:'texte',
-                 },
-                /* {
-                     data:'valor_pedido',
-                     render: function(data){
-                         return `R$ ${data}`
-                     }
-                 },
-                 {
-                     data:'name',
-                 },
-                 {
-                     data:'forma_envio',
-                     render: function(data){
-                         switch (data) {
-                             case '1':
-                                 return "Retirada na Loja"
-                                 break;
-                             case '2':
-                                 return "Entrega Local"
-                                 break;
-                             case '3':
-                                 return "Frete Grátis"
-                                 break;
-                             case '4':
-                                 return "Frete"
-                                 break;
-                             default:
-                                 return "-"
-                         }
-
-                     }
-                 },
-                 {
-                     data:'status_envio',
-                 },
-                 {
-                     data:'data_recebimento',
-                     render: function(data){
-                     //  console.log(data,'data')
-                         data = new Date(data);
-                         dataFormatada = data.toLocaleDateString('pt-BR', {
-                             year: 'numeric',
-                             month: 'numeric',
-                             day: 'numeric',
-                             hour: 'numeric',
-                             minute: 'numeric',
-                         });
-                         return dataFormatada
-                     }
-                 },
-                 {
-                     data:'idP',
-                     render: function(data, type) {
-                         var butoes = [];
-                         butoes.push(
-                         `<button id="${data}" data-tipo="etiqueta" onclick="index(this)" ><i style="color:#fc791e; font-size:1.4em" class="fas fa-info-circle"></i></button>
-                         <button id="${data}" data-tipo="edicao" onclick="index(this)" type="button"><i style="color:#fc791e ;font-size:1.4em" class="fas fa-edit"></i></button>` 
-                         )
-                         return butoes;
-                     }
-                    },
-                    
-                ]
-                
-            });
-       /* function ativeSelectLine(){
-                //marcar selecionadaos no dropdow
-            $( "select" ).each(function(j,index) {
-                    console.log(index,'index')
-                    index.addEventListener('change', function () {
-                    var selectedVal = $(`#${this.id} option:selected`).val();
-                    console.log(selectedVal,'selectedVal')
-                    console.log(this.id,'this.id')
-                    $(`#${this.id} > option`).each(function(l,index2){
-                            $(index2).removeAttr( "selected" )
-                    })
-                    $(`#${this.id} > option[value=${selectedVal.replace(/\s/g, '')}]`).attr("selected", 'selected')
-                    })
-            });
-        }
-        var select = document.querySelectorAll('select');
-        console.log(select)*/
-        //variaveis globais
+     
         var idTable = 0
         function getDataSppinner(url,data,div) {
                 //console.log(data,'data')
@@ -463,17 +274,31 @@
         $( ".table-form" ).submit(function( event ) {
             let url = $("#data-route-url-post-table").attr('data-route-url-post-table')
             let data = $( this ).serializeArray()
-            console.log(data,)
+            let col1
+            let col2
+          //  console.log(data,)
             event.preventDefault();
             result2 = []
+          //  colunas =[]
             data.forEach(function(element) {
                 if(element['name'] == 'id')
                 result2.push([])
                 result2[result2.length - 1].push(element)
             })
+            $('#client-plan thead tr').each(function(){
+                 col1 = $(this).find("#personalizar1-col");
+                 col2 = $(this).find("#personalizar2-col"); 
+            })
            let payload = {
-                dados: result2
+                dados: result2,
+                colunas: [
+                    col1 = $(`#${col1[0].id}`).val(),
+                    col2 = $(`#${col2[0].id}`).val()
+                ],
+                idCliente : $("#data-cliente-id").attr('data-cliente-id')
+
             }
+           //console.log(payload.colunas,'teste')
             resultAjax = getDataSppinner(url,payload,'')//grava no banco
             resultAjax.then(function(){
                 povoarTable() //renderiza a tabela
@@ -543,68 +368,78 @@
                     drop+=`</select>`
             return drop
         }
+        function lineHTML(objeto){
+            var   row = '<tr>' +
+                            '<input type="hidden"  name="id" value='+objeto.id+'>'+
+                            '<td><input value="'+objeto.regiao+'" type="text" class="form-control" name="regiao" id="regiao"></td>' +
+                            '<td><input value="'+objeto.personalizar_1+'" type="text" class="form-control" name="personalizar_1" id="personalizar_1"></td>' +
+                            '<td><input value="'+objeto.personalizar_2+'" type="text" class="form-control" name="personalizar_2" id="personalizar_2"></td>' +
+                            '<td><input value="'+objeto.campanha+'" type="text" class="form-control" name="campanha" id="campanha"></td>' +
+                            '<td><input value="'+objeto.publico_alvo+'" type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td>' +
+                            '<td id="table-objetivo-'+objeto.id+'">'+objeto.objetivo+'</td>'+
+                            '<td id="table-veiculo-'+objeto.id+'">'+objeto.veiculo+'</td>'+
+                            '<td id="table-canal-'+objeto.id+'">'+objeto.canal+'</td>'+
+                            '<td id="table-formatos-'+objeto.id+'">'+objeto.formatos+'</td>'+
+                            '<td id="table-modelos_de_compra-'+objeto.id+'">'+objeto.modelos+'</td>'+
+                            '<td><input value="'+objeto.periodo+'" type="text" class="form-control" name="periodo" id="periodo"></td>' +
+                            '<td><input value="'+objeto.investimento+'" type="text" class="form-control" name="investimneto" id="investimento"></td>' +
+                            '<td><i class="fas fa-clone duplicar"></i><i class="fas fa-trash-alt"></i></td>'+
+                        '</tr>';
+            return row;
+        }
         //duplica uma linha 
         $(document).on("click", ".duplicar", function(){
            let row
-           let texto
-           let selectName
-           let selectOption
-           let index
-           row = $(this).parents("tr").clone()
-           index = $("#client-plan tbody tr:last-child").index();
-           console.log(index,'indexantido')
+            row = $(this).parents("tr").clone()
             idTable += 1;
-            console.log(row[0].cells,'clome')
-         // console.log(idTable,'idTable')
-           let linha = `<tr> <input type="hidden"  name="id" value='${idTable}'>`
-           for(let item of row[0].cells) {
-            //input
-            if(item.childNodes[0].type == 'text'){
-                texto = $(`#${item.childNodes[0].id}`).val()
-                        linha+= `<td>
-                            <input value ='${texto}'type="text" class="form-control" name='${item.childNodes[0].id}' id='${item.childNodes[0].id}'></td>`
-                }else{
-                    //select
-                    if(item.childNodes[0].type == 'select-one'){
-                        selectName = item.childNodes[0].id,
-                        resultado = selectName.split('-');
-                        selectOption = $(`#${item.childNodes[0].id} option:selected`).val()
-                     //   console.log(selectOption,'selectOption');
-                     //options para cada select
-                        switch (resultado[0])
-                        {
-                            case "objetivo":
-                                linha+=`<td  id="table-objetivo-${idTable}">${getdropUp(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',idTable, selectOption)}</td>`
-                            break
-                            case "veiculo":
-                                linha+=`<td>${getdropUp(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',idTable, selectOption)}</td>`
-                                break;
-                            case "canal":
-                                linha+=`<td>${getdropUp(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'],'canal',idTable, selectOption)}</td>`
-                                break;
-                            case "formatos":
-                                linha+=`<td>${getdropUp(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'],'formatos',idTable, selectOption)}</td>`
-                                break;
-                            case "modelos_de_compra":
-                                linha+=`<td>${getdropUp(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'],'modelos_de_compra',idTable, selectOption)}</td>`
-                                break;
-                        }
-                    }
-                }
-           }
-           linha+=`<td><i class='fas fa-clone duplicar'></i><i class='fas fa-trash-alt delete'></i></td>`
-           linha+=`<tr>`
-            $("#client-plan").append(linha);//insere a linha
+            var var1 = row.find("td").eq(0).html()//regiao
+            var var2 = row.find("td").eq(1).html()//persinalizar_1
+            var var3 = row.find("td").eq(2).html() //personalizar_2
+            var var4 = row.find("td").eq(3).html()//campanha
+            var var5 = row.find("td").eq(4).html() //publico alvo
+            var var6 = row.find("td").eq(5); //objetivo
+            var var7 = row.find("td").eq(6); //veiculo
+            var var8 = row.find("td").eq(7); //canal
+            var var9 = row.find("td").eq(8); //formatos
+            var var10 = row.find("td").eq(9); //modelos
+            var var11 = row.find("td").eq(10).html() //periodo
+            var var12 = row.find("td").eq(11).html() //investimento
+
+            var6[0].childNodes[0].type == 'text' ? type6 = '<input value="'+$(var6[0].childNodes[0]).val()+'" name="objetivo*input" type="text" class="form-control">' : type6 = getdropUp(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo', idTable,$(`#${var6[0].childNodes[0].id} option:selected`).val()) ; //objetivo
+            var7[0].childNodes[0].type == 'text' ? type7 = '<input value="'+$(var7[0].childNodes[0]).val()+'" name="veiculo*input" type="text" class="form-control">' : type7 = getdropUp(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo', idTable,$(`#${var7[0].childNodes[0].id} option:selected`).val()) ; //veiculo
+            var8[0].childNodes[0].type == 'text' ? type8 = '<input value="'+$(var8[0].childNodes[0]).val()+'" name="canal*input" type="text" class="form-control">' : type8 = getdropUp(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'],'canal', idTable,$(`#${var8[0].childNodes[0].id} option:selected`).val()) ; //canal
+            var9[0].childNodes[0].type == 'text' ? type9 = '<input value="'+$(var9[0].childNodes[0]).val()+'" name="formatos*input" type="text" class="form-control">' : type9 = getdropUp(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'],'formatos', idTable,$(`#${var9[0].childNodes[0].id} option:selected`).val()) ; //formatos
+            var10[0].childNodes[0].type == 'text' ? type10 = '<input value="'+$(var10[0].childNodes[0]).val()+'" name="modelos_de_compra*input" type="text" class="form-control">' : type10 = getdropUp(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'],'modelos_de_compra', idTable,$(`#${var10[0].childNodes[0].id} option:selected`).val()) ; //modelos
+            
+            var obj={};
+            obj.regiao= $(var1).val();
+            obj.personalizar_1= $(var2).val();
+            obj.personalizar_2=$(var3).val();
+            obj.campanha=$(var4).val();
+            obj.publico_alvo=$(var5).val();
+            obj.objetivo= type6; 
+            obj.veiculo= type7;
+            obj.canal= type8;
+            obj.formatos= type9;
+            obj.modelos= type10;
+            obj.periodo= $(var11).val();
+            obj.investimento = $(var12).val();
+            obj.id = idTable;
+            $("#client-plan").append(lineHTML(obj));
+         
         });
         //constroi a tabela com os dados do banco
         function construirHtmltable(item){
+            //console.log(item,'iem')
             let type
+           // let veiculo
             //objtivo
             type  = item.objetivo.split("*")
-            type[1] == 'select'  ?  objetivo = getdropUp(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',item.id,type[0]) : '<input value="'+item.objetivo+'" name="objetivo*input" type="text" class="form-control">'
+            type[1] == 'select'  ?  objetivo = getdropUp(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',item.id,type[0]) : '<input value="'+type[0]+'" name="objetivo*input" type="text" class="form-control">'
             //veiculo
             type2  = item.veiculo.split("*")
-            type2[1] == 'select' ? veiculo = getdropUp(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',item.id, type2[0]) : '<input value="'+item.veiculo+'" name="veiculo*input" type="text" class="form-control">'
+            type2[1] == 'select' ? veiculo = getdropUp(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',item.id, type2[0]) : veiculo ='<input value="'+type2[0]+'" name="veiculo*input" type="text" class="form-control">'
+         //   console.log('')
             //canal
             type3= item.canal.split("*")
             type3[1] == 'select' ? canal = getdropUp(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'],'canal',item.id,type3[0]) : '<input value="'+item.canal+'" name="canal*input" type="text" class="form-control">'
@@ -641,15 +476,19 @@
             }
             result = getDataSppinner(url,data,'')
             result.then(function(data){
-                data.length == 0 ?  idTable = 0 : idTable= data.length //retorna a quantidade de linhas do banco
+              //  console.log(data.tabela.label_1,'data')
+               // atualiza as colunas variaveis
+                $('#client-plan thead tr #personalizar1-col').attr('value',data.tabela.label_1)
+                $('#client-plan thead tr #personalizar2-col').attr('value',data.tabela.label_2)
+                data.plano.length == 0 ?  idTable = 0 : idTable= data.plano.length //retorna a quantidade de linhas do banco
                 //Limpar a tabela
                 $('#client-plan tbody > tr').remove();
-                if(data.length > 0){
-                    data.map(function(item,j){
-                        //console.log(item,'item')
-                        //construir uma funcao o hml para cada
+                if(data.plano.length > 0){
+                    data.plano.map(function(item,j){
+                       // console.log(item,'item')
+                     //   construir uma funcao o hml para cada
                         resultRow = construirHtmltable(item)
-                        $("#client-plan").append(resultRow);//insere a linha
+                       $("#client-plan").append(resultRow);//insere a linha
                     })
                 }
                 //ler os dados separando os types
@@ -718,7 +557,7 @@
                 var customerId10 = $(this).find("td").eq(9); //modelos
                 var customerId11 = $(this).find("td").eq(10).html();  //periodo
                 var customerId12 = $(this).find("td").eq(11).html();  //investimento
-                console.log(customerId6,'dsd')
+                console.log(customerId4,'dsd')
                 select6 = $(`#${customerId6[0].childNodes[0].id} option:selected`).val();
                 select7 = $(`#${customerId7[0].childNodes[0].id} option:selected`).val();
                 select8 = $(`#${customerId8[0].childNodes[0].id} option:selected`).val();

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Organizacao;
 use App\Models\Plano;
+use App\Models\Tabela;
 
 class PlanoController extends Controller
 {
@@ -69,7 +70,11 @@ class PlanoController extends Controller
     }
     public function store(Request $request)
     {
-      
+      //  dd($request->idCliente);
+         $tabela = Tabela::firstOrNew(['fk_cliente' => $request->idCliente]); //verifica se o registo ja existe
+         $tabela->label_1 = $request->colunas[0];
+         $tabela->label_2 = $request->colunas[1];
+         $tabela->save();
         foreach ($request->dados as  $key=>$valor){
              // var_dump($request->dados[$key][0]['value']);
             $plano = Plano::firstOrNew(['id' => $request->dados[$key][0]['value']]); //verifica se o registo ja existe
@@ -142,7 +147,10 @@ class PlanoController extends Controller
     {   //dd($request->id);
         $plano = Plano::where('fk_cliente', $request->id)
                ->get();
-        return $plano;
+       $tabela = Tabela::where('fk_cliente',$request->id)->first();
+       $data['plano'] = $plano;
+       $data['tabela'] = $tabela;
+        return $data;
     }
 
     /**
