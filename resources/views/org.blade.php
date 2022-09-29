@@ -53,6 +53,7 @@
     #client-plan tr td input {
         padding: 8px;
         width: 150px;
+        text-align: center
     }
     #client-plan tr td select {
         padding: 8px;
@@ -67,12 +68,20 @@
     #client-plan tr td i {
         color: #61fb89;
         padding: 2px;
+        text-align: center
+    }
+    #client-plan tr td #returnDrop {
+       text-align: center;
+       cursor: pointer;
+      margin-left: 60px;
+      margin-top: 5px;
+       
     }
     
     #client-plan th {
         font-size: 0.8em;
         background-color: #ffffff;
-        text-align: center !important;
+        margin-left: 50px
     }
     
     #client-plan .dropdown-menu {
@@ -95,6 +104,7 @@
         margin-bottom: 15px;
         color: #000;
     }
+    
     /* .box-table table{
         border: 2px solid yellow;
     }*/
@@ -224,7 +234,59 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.25.2/minified.js" integrity="sha512-yHLAgovfc/zAwDgU0iMrEg2NtpJJctpOFIAHVpqVm7qOumLjLi9LhX7gvOwZp7sn70yjpP+BqxUGmV+J3fdIVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js" integrity="sha512-2V49R8ndaagCOnwmj8QnbT1Gz/rie17UouD9Re5WxbzRVUGoftCu5IuqqtAM9+UC3fwfHCSJR1hkzNQh/2wdtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
+      function getdrop(item,id,index){
+           // console.log(index,'item')
+                let drop=    `<select onchange="selectFunction(this)" name ="${id}*select" id="${id}-${index}" class="custom-select">`
+                                item.map(function(i,j){
+                                        drop+=`<option onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'>${i}</option>`
+                                })
+                drop+=`</select>`
+            return drop
+        }
+    function returnDrop(dados){
+        let idDrop = dados.id.split('/')
+        let idDrop2 = idDrop[1].split('-')
+        console.log(idDrop)
+        console.log(idDrop2[1])
+        switch (idDrop2[0]) {
+            case 'objetivo':
+                $(`#table-${idDrop[1]} input`).remove()
+                $(`#table-${idDrop[1]} span`).remove()
+                drop = getdrop(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',idDrop2[1])
+                $(`#table-${idDrop[1]}`).append(drop)
+            break;
+            case 'veiculo':
+               // console.log('veiuclo')
+                $(`#table-${idDrop[1]} input`).remove()
+                $(`#table-${idDrop[1]} span`).remove()
+                drop =  getdrop(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',idDrop2[1])
+                $(`#table-${idDrop[1]}`).append(drop)
+            break;
+            case 'canal':
+                $(`#table-${idDrop[1]} input`).remove()
+                $(`#table-${idDrop[1]} span`).remove()
+                drop =  getdrop(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'],'canal',idDrop2[1])
+                $(`#table-${idDrop[1]}`).append(drop)
+              //  console.log('canal')
+                break;
+            case 'formatos':
+                $(`#table-${idDrop[1]} input`).remove()
+                $(`#table-${idDrop[1]} span`).remove()
+                drop =  getdrop(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'],'formatos',idDrop2[1])
+                $(`#table-${idDrop[1]}`).append(drop)
+                //console.log('formmaro')
+                break;
+            case 'modelos_de_compra':
+                $(`#table-${idDrop[1]} input`).remove()
+                $(`#table-${idDrop[1]} span`).remove()
+                drop =   getdrop(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'],'modelos_de_compra',idDrop2[1])
+                $(`#table-${idDrop[1]}`).append(drop)
+                break;
+            default:
+        }
+    }
     function selectFunction(dados){
+        console.log(dados.id,'dspds')
         let option = $( `#${dados.id} option:selected` ).text()
         input = ''
         let name
@@ -235,7 +297,7 @@
             $(`#table-${dados.id} select`).removeAttr('name')
              $(`#table-${dados.id} select`).remove()
              //colocar o input
-             input = `<input type="text" class="form-control" name="${name[0]}*input"><i class="fas fa-undo"></i>`
+             input = `<input type="text" class="form-control" name="${name[0]}*input"><span id="drop/${dados.id}"  onclick="returnDrop(this)"><i class="fas fa-undo"></i></span>`
             
              $(`#table-${dados.id}`).append(input)
             //botao de voltar para o drop
@@ -307,15 +369,7 @@
       
         });
         
-        function getdrop(item,id,index){
-           // console.log(index,'item')
-                let drop=    `<select onchange="selectFunction(this)" name ="${id}*select" id="${id}-${index}" class="custom-select">`
-                                item.map(function(i,j){
-                                        drop+=`<option onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'>${i}</option>`
-                                })
-                drop+=`</select>`
-            return drop
-        }
+      
         //adicionar linha
         $('#addRow').on('click', function () {
             $("table .dataTables_empty").hide()
@@ -332,10 +386,10 @@
                         '<td><input type="text" class="form-control" name="campanha" id="campanha"></td>' +
                         '<td><input type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td>' +
                         '<td id="table-objetivo-'+idTable+'">'+ getdrop(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',idTable)+'</td>'+
-                        '<td>'+ getdrop(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',idTable)+'</td>' +
-                        '<td>'+ getdrop(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'],'canal',idTable)+'</td>' +
-                        '<td>'+ getdrop(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'],'formatos',idTable)+'</td>' +
-                        '<td>'+ getdrop(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'],'modelos_de_compra',idTable)+'</td>' +
+                        '<td id="table-veiculo-'+idTable+'">'+ getdrop(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',idTable)+'</td>' +
+                        '<td id="table-canal-'+idTable+'">'+ getdrop(['Search','Display','Youtube','Facebook','Instagram','Linkedin','Personalizar'],'canal',idTable)+'</td>' +
+                        '<td id="table-formatos-'+idTable+'">'+ getdrop(['Texto','Banner','Vídeo','Push Notification','Imagens única','Carrossel','Personalizar'],'formatos',idTable)+'</td>' +
+                        '<td id="table-modelos_de_compra-'+idTable+'">'+ getdrop(['CPM','CPC','CPV','CPE','CPL','CPA','Personalizar'],'modelos_de_compra',idTable)+'</td>' +
                         '<td><input type="text" class="form-control" name="periodo" id="periodo"></td>' +
                         '<td><input type="text" class="form-control" name="investimneto" id="investimneto"></td>' +
                         `<td><i class='fas fa-clone duplicar'></i><i class='fas fa-trash-alt delete'></i></td>` +
@@ -435,7 +489,7 @@
             let type
             //objetivo
             type  = item.objetivo.split("*")
-            type[1] == 'select'  ?  objetivo = getdropUp(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',item.id,type[0]) : '<input value="'+type[0]+'" name="objetivo*input" type="text" class="form-control">'
+            type[1] == 'select'  ?  objetivo = getdropUp(['Alcance','Reconhecimento','Tráfeco','Conversões','Personalizar'],'objetivo',item.id,type[0]) : objetivo = '<input value="'+type[0]+'" name="objetivo*input" type="text" class="form-control">'
             //veiculo
             type2  = item.veiculo.split("*")
             type2[1] == 'select' ? veiculo = getdropUp(['Google','Meta','Linkedin','Twitter','Personalizar'],'veiculo',item.id, type2[0]) : veiculo ='<input value="'+type2[0]+'" name="veiculo*input" type="text" class="form-control">'
@@ -587,7 +641,7 @@
                             function(values, canal) {
                                 return {
                                     total: _.reduce(_.pluck(values, 'investimento'), sum, 0),
-                                    linhas: values
+                                    linhas: values,
                                 };
                             }
                         );
