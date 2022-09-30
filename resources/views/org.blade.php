@@ -105,6 +105,17 @@
         color: #000;
     }
     
+    .cabecalho-table  tbody .total-linha td{
+        border: none  !important;
+    }
+    .cabecalho-table  tbody .nomeTotal{
+        color: #36601c;
+        text-transform: uppercase;
+        font-size: 0.9em;
+        font-weight: bold;
+        text-align: center
+    }
+    nomeTotal
     /* .box-table table{
         border: 2px solid yellow;
     }*/
@@ -563,8 +574,20 @@
                         })
                         let key2 = key.split('*')
                         var  rowTotal = '<tr class="total-linha">' +
-                                                    '<td style="border:none"><div style="border:2px solid red; position:absolute; left:50%;">'+key2[0]+' '+value.total+'</div></td>' +
-                                                '</tr>'
+                                                    '<td></td>' +
+                                                    '<td></td>' +
+                                                    '<td></td>' +
+                                                    '<td></td>' +
+                                                    '<td><div class="nomeTotal">TOTAL '+key2[0]+'</div></td>' +
+                                                    '<td></td>' +
+                                                    '<td></td>' +
+                                                    '<td></td>' +
+                                                    '<td></td>' +
+                                                    '<td></td>' +
+                                                    '<td></td>' +
+                                                    '<td><div class="nomeTotal"> R$ '+value.total+'</div></td>' +
+                                                    '<td></td>' +
+                                        '</tr>'
                                 $("#client-plan").append(rowTotal);//insere a linha
                                 // console.log(key,'key')
                             })
