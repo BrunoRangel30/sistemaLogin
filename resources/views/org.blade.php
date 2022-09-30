@@ -524,7 +524,7 @@
                             '<td id="table-formatos-'+item.id+'">'+formato+'</td>'+
                             '<td id="table-modelos_de_compra-'+item.id+'">'+modelo+'</td>'+
                             '<td><input value="'+item.periodo+'" type="text" class="form-control" name="periodo" id="periodo"></td>' +
-                            '<td><input value="'+item.investimento+'" type="text" class="form-control" name="investimneto" id="investimento"></td>' +
+                            '<td><input step="any" pattern="[0-9]+([,\.][0-9]+)?" min="0" type="number" value="'+item.investimento+'" type="text" class="form-control" name="investimneto" id="investimento"></td>' +
                             '<td><i class="fas fa-clone duplicar"></i><i class="fas fa-trash-alt"></i></td>'+
                         '</tr>';
             return row;
