@@ -33,6 +33,7 @@ Route::get('/planos/{id_cliente}', 'App\Http\Controllers\PlanoController@index')
 Route::post('/getTablePanos', 'App\Http\Controllers\PlanoController@getTableAjax')->name('planoTable');
 Route::post('/storeTablePanos', 'App\Http\Controllers\PlanoController@store')->name('planoTableStore');
 Route::post('/showTable', 'App\Http\Controllers\PlanoController@show')->name('showTable');
+Route::post('/deleteLine', 'App\Http\Controllers\PlanoController@destroy')->name('deleteLine');
 /*Route::get('/plano', function () {
     return view('org');
 })->name('org');*/

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Organizacao;
 use App\Models\Plano;
 use App\Models\Tabela;
+use Illuminate\Support\Facades\DB;
 
 class PlanoController extends Controller
 {
@@ -145,11 +146,13 @@ class PlanoController extends Controller
      */
     public function show(Request $request)
     {   //dd($request->id);
+        $Id =DB::table('plano')->latest('id')->first();
         $plano = Plano::where('fk_cliente', $request->id)
                ->get();
        $tabela = Tabela::where('fk_cliente',$request->id)->first();
        $data['plano'] = $plano;
        $data['tabela'] = $tabela;
+       $data['id'] = $Id;
         return $data;
     }
 
@@ -182,8 +185,12 @@ class PlanoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $plano = Plano::find($request->id);
+        $plano->delete();
+       // dd($plano->id);
+        return 1;
+
     }
 }
