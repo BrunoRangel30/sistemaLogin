@@ -62,10 +62,14 @@
         border: none;
         color: #61fb89;
         background-color: #000;
+        padding-top: 10px;
+        text-align: center;
+        
     }
     
     #client-plan tr td select option {
         background-color: #5a5855;
+        padding:10px
     }
     
     #client-plan tr td i {
@@ -142,6 +146,10 @@
     .footer-botao .confirmExclusao {
         background-color: #61fb89 !important;
         border: 1px #61fb89 !important;
+    }
+    .custom-select option{
+        border: 2px solid red !important;
+        padding: 5px;
     }
 </style>
 @section('conteudo')
