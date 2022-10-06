@@ -76,7 +76,7 @@ class PlanoController extends Controller
          $tabela->label_1 = $request->colunas[0];
          $tabela->label_2 = $request->colunas[1];
          $tabela->save();
-         $org = $org->getOrg(auth()->user()->id);
+        // $org = $org->getOrg(auth()->user()->id);
         foreach ($request->dados as  $key=>$valor){
              // var_dump($request->dados[$key][0]['value']);
             $plano = Plano::firstOrNew(['id' => $request->dados[$key][0]['value']]); //verifica se o registo ja existe

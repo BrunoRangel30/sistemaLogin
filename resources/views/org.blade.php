@@ -51,7 +51,7 @@
     }
     
     #client-plan tr td input {
-        padding: 8px;
+        padding: 8px; 
         width: 150px;
         text-align: center
     }
@@ -62,16 +62,19 @@
         border: none;
         color: #61fb89;
         background-color: #000;
-        padding-top: 10px;
         text-align: center;
+       
         
     }
     
     #client-plan tr td select option {
-        background-color: #5a5855;
-        padding:10px
+       background-color: #5a5855;
     }
-    
+    #client-plan .total-linha{
+        border-bottom:1px solid #61fb89 !important;
+        border-right:1px solid #61fb89 !important;
+        border-left:1px solid #61fb89 !important;
+    }
     #client-plan tr td i {
         color: #61fb89;
         padding: 2px;
@@ -147,10 +150,10 @@
         background-color: #61fb89 !important;
         border: 1px #61fb89 !important;
     }
-    .custom-select option{
-        border: 2px solid red !important;
-        padding: 5px;
+    #client-plan .custom-select option{
+        border: 2px solid red
     }
+   
 </style>
 @section('conteudo')
 <div class="config-page">
@@ -240,13 +243,18 @@
                             <button id="consolidar" type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Consolidar</b></button>
                             <button id="salvarDados" type="submit" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>  <b>Salvar</b></button>
                         </div>
+                        <div style="border: 2px solid #36601c; position:absolute; z-index:2; left: 1949px; top: 10px;">
+                          
+                            <input  readonly="readonly" style="background-color:#000;color:#36601c;text-align:center;width: 172px;font-weight: bold;"id="total-tabela" class="currency" style="color: #FFFF">
+                            
+                        </div>
                         <thead>
                             <tr>
-                                <th>Regiao</th>
+                                <th>Região</th>
                                 <th><input style="text-align: center;" type="text" id="personalizar1-col"></th>
                                 <th><input  style="text-align: center;" type="text" id="personalizar2-col"></th>
                                 <th>Campanha</th>
-                                <th>Publico-alvo</th>
+                                <th>Público-alvo</th>
                                 <th>Objetivo</th>
                                 <th>Veículo</th>
                                 <th>Canal</th>
@@ -295,12 +303,12 @@
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
     <input id="data-delete-line" type="hidden" data-delete-line="{{ route('deleteLine') }}">
 </div>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" integrity="" crossorigin="anonymous">
+<!--<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" integrity="" crossorigin="anonymous">
 
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" integrity="" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" integrity="" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.25.2/minified.js" integrity="sha512-yHLAgovfc/zAwDgU0iMrEg2NtpJJctpOFIAHVpqVm7qOumLjLi9LhX7gvOwZp7sn70yjpP+BqxUGmV+J3fdIVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.25.2/minified.js" integrity="sha512-yHLAgovfc/zAwDgU0iMrEg2NtpJJctpOFIAHVpqVm7qOumLjLi9LhX7gvOwZp7sn70yjpP+BqxUGmV+J3fdIVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js" integrity="sha512-2V49R8ndaagCOnwmj8QnbT1Gz/rie17UouD9Re5WxbzRVUGoftCu5IuqqtAM9+UC3fwfHCSJR1hkzNQh/2wdtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     //ajax
@@ -333,7 +341,7 @@
         // console.log(index,'item')
         let drop = `<select onchange="selectFunction(this)" name ="${id}*select" id="${id}-${index}" class="custom-select">`
         item.map(function(i, j) {
-            drop += `<option onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'>${i}</option>`
+            drop += `<option onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop pt-3'>${i}</option>`
         })
         drop += `</select>`
         return drop
@@ -368,7 +376,7 @@
             case 'formatos':
                 $(`#table-${idDrop[1]} input`).remove()
                 $(`#table-${idDrop[1]} span`).remove()
-                drop = getdrop(['Texto', 'Banner', 'Vídeo', 'Push Notification', 'Imagens única', 'Carrossel', 'Personalizar'], 'formatos', idDrop2[1])
+                drop = getdrop(['Texto', 'Banner', 'Vídeo', 'Push Notification', 'Imagem única', 'Carrossel', 'Personalizar'], 'formatos', idDrop2[1])
                 $(`#table-${idDrop[1]}`).append(drop)
                     //console.log('formmaro')
                 break;
@@ -460,10 +468,10 @@
                         '<td id="table-objetivo-' + idTable + '">' + getdrop(['Alcance', 'Reconhecimento', 'Tráfeco', 'Conversões', 'Personalizar'], 'objetivo', idTable) + '</td>' +
                         '<td id="table-veiculo-' + idTable + '">' + getdrop(['Google', 'Meta', 'Linkedin', 'Twitter', 'Personalizar'], 'veiculo', idTable) + '</td>' +
                         '<td id="table-canal-' + idTable + '">' + getdrop(['Search', 'Display', 'Youtube', 'Facebook', 'Instagram', 'Linkedin', 'Personalizar'], 'canal', idTable) + '</td>' +
-                        '<td id="table-formatos-' + idTable + '">' + getdrop(['Texto', 'Banner', 'Vídeo', 'Push Notification', 'Imagens única', 'Carrossel', 'Personalizar'], 'formatos', idTable) + '</td>' +
+                        '<td id="table-formatos-' + idTable + '">' + getdrop(['Texto', 'Banner', 'Vídeo', 'Push Notification', 'Imagem única', 'Carrossel', 'Personalizar'], 'formatos', idTable) + '</td>' +
                         '<td id="table-modelos_de_compra-' + idTable + '">' + getdrop(['CPM', 'CPC', 'CPV', 'CPE', 'CPL', 'CPA', 'Personalizar'], 'modelos_de_compra', idTable) + '</td>' +
                         '<td><input type="text" class="form-control" name="periodo" id="periodo"></td>' +
-                        '<td><input step="any" pattern="[0-9]+([,\.][0-9]+)?" min="0" type="number" class="form-control" name="investimneto" id="investimneto"></td>' +
+                        '<td><span style="color:#FFF; position:absolute; margin-top: 13px;z-index:1">R$</span><input pattern="[0-9]+([,\.][0-9]+)?" style="width:150px" step="0.01" type="number" value="" type="text" class="form-control" name="investimneto" id="investimento"></td>' +
                         `<td><i class='fas fa-clone duplicar'></i><i class='fas fa-trash-alt delete'></i></td>` +
                         '</tr>';
                     $("#client-plan").append(row);
@@ -501,9 +509,9 @@
                     item.map(function(i, j) {
                         if (i.replace(/\s/g, '') == select) {
                             // console.log(i,select,'teste')
-                            drop += `<option selected onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'>${i}</option>`
+                            drop += `<option selected onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop pt-3'>${i}</option>`
                         } else {
-                            drop += `<option  onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop'>${i}</option>`
+                            drop += `<option  onclick="selectDrop(this)" value="${i.replace(/\s/g, '')}" data-input="${id}-${index}" class='selectDrop pt-3'>${i}</option>`
                         }
                     })
                     drop += `</select>`
@@ -524,7 +532,7 @@
                         '<td id="table-formatos-' + objeto.id + '">' + objeto.formatos + '</td>' +
                         '<td id="table-modelos_de_compra-' + objeto.id + '">' + objeto.modelos + '</td>' +
                         '<td><input value="' + objeto.periodo + '" type="text" class="form-control" name="periodo" id="periodo"></td>' +
-                        '<td><input step="any" pattern="[0-9]+([,\.][0-9]+)?" min="0" type="number" value="' + objeto.investimento + '" type="text" class="form-control" name="investimneto" id="investimento"></td>' +
+                        '<td><span style="color:#FFF; position:absolute; margin-top: 13px;z-index:1">R$</span><input pattern="[0-9]+([,\.][0-9]+)?" style="width:150px" step="0.01" type="number" value="'+ objeto.investimento + '" type="text" class="form-control" name="investimneto" id="investimento"></td>' +
                         '<td><i class="fas fa-clone duplicar"></i><i class="fas fa-trash-alt delete"></i></td>' +
                         '</tr>';
                     return row;
@@ -546,12 +554,12 @@
                     var var9 = row.find("td").eq(8); //formatos
                     var var10 = row.find("td").eq(9); //modelos
                     var var11 = row.find("td").eq(10).html() //periodo
-                    var var12 = row.find("td").eq(11).html() //investimento
-
+                    var var12 = row.find("td").eq(11) //investimento
+                  
                     var6[0].childNodes[0].type == 'text' ? type6 = '<input value="' + $(var6[0].childNodes[0]).val() + '" name="objetivo*input" type="text" class="form-control"><span id="drop/objetivo-' + idTable + '"  onclick="returnDrop(this)"><i class="fas fa-undo"></i></span>' : type6 = getdropUp(['Alcance', 'Reconhecimento', 'Tráfeco', 'Conversões', 'Personalizar'], 'objetivo', idTable, $(`#${var6[0].childNodes[0].id} option:selected`).val()); //objetivo
                     var7[0].childNodes[0].type == 'text' ? type7 = '<input value="' + $(var7[0].childNodes[0]).val() + '" name="veiculo*input" type="text" class="form-control"><span id="drop/veiculo-' + idTable + '"  onclick="returnDrop(this)"><i class="fas fa-undo"></i></span>' : type7 = getdropUp(['Google', 'Meta', 'Linkedin', 'Twitter', 'Personalizar'], 'veiculo', idTable, $(`#${var7[0].childNodes[0].id} option:selected`).val()); //veiculo
                     var8[0].childNodes[0].type == 'text' ? type8 = '<input value="' + $(var8[0].childNodes[0]).val() + '" name="canal*input" type="text" class="form-control"><span id="drop/canal-' + idTable + '"  onclick="returnDrop(this)"><i class="fas fa-undo"></i></span>' : type8 = getdropUp(['Search', 'Display', 'Youtube', 'Facebook', 'Instagram', 'Linkedin', 'Personalizar'], 'canal', idTable, $(`#${var8[0].childNodes[0].id} option:selected`).val()); //canal
-                    var9[0].childNodes[0].type == 'text' ? type9 = '<input value="' + $(var9[0].childNodes[0]).val() + '" name="formatos*input" type="text" class="form-control"><span id="drop/formatos-' + idTable + '"  onclick="returnDrop(this)"><i class="fas fa-undo"></i></span>' : type9 = getdropUp(['Texto', 'Banner', 'Vídeo', 'Push Notification', 'Imagens única', 'Carrossel', 'Personalizar'], 'formatos', idTable, $(`#${var9[0].childNodes[0].id} option:selected`).val()); //formatos
+                    var9[0].childNodes[0].type == 'text' ? type9 = '<input value="' + $(var9[0].childNodes[0]).val() + '" name="formatos*input" type="text" class="form-control"><span id="drop/formatos-' + idTable + '"  onclick="returnDrop(this)"><i class="fas fa-undo"></i></span>' : type9 = getdropUp(['Texto', 'Banner', 'Vídeo', 'Push Notification', 'Imagem única', 'Carrossel', 'Personalizar'], 'formatos', idTable, $(`#${var9[0].childNodes[0].id} option:selected`).val()); //formatos
                     var10[0].childNodes[0].type == 'text' ? type10 = '<input value="' + $(var10[0].childNodes[0]).val() + '" name="modelos_de_compra*input" type="text" class="form-control"><span id="drop/modelos_de_compra-' + idTable + '"  onclick="returnDrop(this)"><i class="fas fa-undo"></i></span>' : type10 = getdropUp(['CPM', 'CPC', 'CPV', 'CPE', 'CPL', 'CPA', 'Personalizar'], 'modelos_de_compra', idTable, $(`#${var10[0].childNodes[0].id} option:selected`).val()); //modelos
 
                     var obj = {};
@@ -566,7 +574,7 @@
                     obj.formatos = type9;
                     obj.modelos = type10;
                     obj.periodo = $(var11).val();
-                    obj.investimento = $(var12).val();
+                    obj.investimento =  $(var12[0].childNodes[1]).val();
                     obj.id = idTable;
                     $("#client-plan").append(lineHTML(obj));
 
@@ -575,7 +583,7 @@
                 //constroi a tabela (HTML)
                 function construirHtmltable(item, typeDelete) {
                     //console.log(item,'iem')
-                    console.log(typeDelete, 'typeDelete')
+                   // console.log(typeDelete, 'typeDelete')
                     typeDelete == 1 ? action = `<i class="fas fa-clone duplicar"></i><i class="fas fa-trash-alt deleteConsolidar"></i>` : action = `<i class="fas fa-clone duplicar"></i><i id="delete-${item.id}" class="fas fa-trash-alt deleteBanco"></i>`
                     let type
                         //objetivo
@@ -590,26 +598,28 @@
                         //formatos
                     type4 = item.formatos.split("*")
                         // console.log(type4[1],'tipo4')
-                    type4[1] == 'select' ? formato = getdropUp(['Texto', 'Banner', 'Vídeo', 'Push Notification', 'Imagens única', 'Carrossel', 'Personalizar'], 'formatos', item.id, type4[0]) : formato = '<input value="' + type4[0] + '" name="formatos*input" type="text" class="form-control"><span id="drop/formatos-' + item.id + '"  onclick="returnDrop(this)"><i class="fas fa-undo"></i></span>'
+                    type4[1] == 'select' ? formato = getdropUp(['Texto', 'Banner', 'Vídeo', 'Push Notification', 'Imagem única', 'Carrossel', 'Personalizar'], 'formatos', item.id, type4[0]) : formato = '<input value="' + type4[0] + '" name="formatos*input" type="text" class="form-control"><span id="drop/formatos-' + item.id + '"  onclick="returnDrop(this)"><i class="fas fa-undo"></i></span>'
                         //modelos de compra
                     type5 = item.modelos_compra.split("*")
                     type5[1] == 'select' ? modelo = getdropUp(['CPM', 'CPC', 'CPV', 'CPE', 'CPL', 'CPA', 'Personalizar'], 'modelos_de_compra', item.id, type5[0]) : modelo = '<input value="' + type5[0] + '" name="modelos_compra*input" type="text" class="form-control"><span id="drop/modelos_de_compra-' + item.id + '"  onclick="returnDrop(this)"><i class="fas fa-undo"></i></span>'
+                   // investimento =  item.investimento
+                    //investimento = item.investimento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                     var row = '<tr>' +
-                        '<input type="hidden"  name="id" value=' + item.id + '>' +
-                        '<td id="table-regiao-' + item.id + '"><input value="' + item.regiao + '" type="text" class="form-control" name="regiao" id="regiao"></td>' +
-                        '<td><input value="' + item.persornalizar_1 + '" type="text" class="form-control" name="personalizar_1" id="personalizar_1"></td>' +
-                        '<td><input value="' + item.personalizar_2 + '" type="text" class="form-control" name="personalizar_2" id="personalizar_2"></td>' +
-                        '<td><input value="' + item.campanha + '" type="text" class="form-control" name="campanha" id="campanha"></td>' +
-                        '<td><input value="' + item.publico_alvo + '" type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td>' +
-                        '<td id="table-objetivo-' + item.id + '">' + objetivo + '</td>' +
-                        '<td id="table-veiculo-' + item.id + '">' + veiculo + '</td>' +
-                        '<td id="table-canal-' + item.id + '">' + canal + '</td>' +
-                        '<td id="table-formatos-' + item.id + '">' + formato + '</td>' +
-                        '<td id="table-modelos_de_compra-' + item.id + '">' + modelo + '</td>' +
-                        '<td><input value="' + item.periodo + '" type="text" class="form-control" name="periodo" id="periodo"></td>' +
-                        '<td><input step="any" pattern="[0-9]+([,\.][0-9]+)?" min="0" type="number" value="' + item.investimento + '" type="text" class="form-control" name="investimneto" id="investimento"></td>' +
-                        '<td>' + action + '</td>' +
-                        '</tr>';
+                                    '<input type="hidden"  name="id" value=' + item.id + '>' +
+                                    '<td id="table-regiao-' + item.id + '"><input value="' + item.regiao + '" type="text" class="form-control" name="regiao" id="regiao"></td>' +
+                                    '<td><input value="' + item.persornalizar_1 + '" type="text" class="form-control" name="personalizar_1" id="personalizar_1"></td>' +
+                                    '<td><input value="' + item.personalizar_2 + '" type="text" class="form-control" name="personalizar_2" id="personalizar_2"></td>' +
+                                    '<td><input value="' + item.campanha + '" type="text" class="form-control" name="campanha" id="campanha"></td>' +
+                                    '<td><input value="' + item.publico_alvo + '" type="text" class="form-control" name="publico_alvo" id="publico_alvo"></td>' +
+                                    '<td id="table-objetivo-' + item.id + '">' + objetivo + '</td>' +
+                                    '<td id="table-veiculo-' + item.id + '">' + veiculo + '</td>' +
+                                    '<td id="table-canal-' + item.id + '">' + canal + '</td>' +
+                                    '<td id="table-formatos-' + item.id + '">' + formato + '</td>' +
+                                    '<td id="table-modelos_de_compra-' + item.id + '">' + modelo + '</td>' +
+                                    '<td><input value="' + item.periodo + '" type="text" class="form-control" name="periodo" id="periodo"></td>' +
+                                    '<td><span style="color:#FFF; position:absolute; margin-top: 13px;z-index:1">R$</span><input pattern="[0-9]+([,\.][0-9]+)?" style="width:150px" step="0.01" type="number" value="'+ item.investimento + '" type="text" class="form-control" name="investimneto" id="investimento"></td>' +
+                                    '<td>' + action + '</td>' +
+                                '</tr>';
                     return row;
                 }
                 //constroi com dados salvos do banco
@@ -623,13 +633,13 @@
                     }
                     result = getDataSppinner(url, data, 'loadding')
                     result.then(function(data) {
-                        console.log(data.id, 'id')
+                        //console.log(data.id, 'id')
                             //  console.log(data.tabela.label_1,'data')
                             // atualiza as colunas variaveis
                         $('#client-plan thead tr #personalizar1-col').attr('value', data.tabela.label_1)
                         $('#client-plan thead tr #personalizar2-col').attr('value', data.tabela.label_2)
                         data.id == null ? idTable = 0 : idTable = data.id.id //retorna a quantidade de linhas do banco
-                        console.log(idTable, 'idTable')
+                       // console.log(idTable, 'idTable')
                             //Limpar a tabela
                         $('#client-plan tbody > tr').remove(); //limpa a tabela
                         if (data.plano.length > 0) {
@@ -641,8 +651,9 @@
                 povoarTable() //chamada inicial para renderizar a tabela
                     //agrupa a tabela
                 function agruparTable(data, typeDelete) {
+                    var totalTabela = 0
                     var sum = function(t, n) {
-                        return parseInt(t) + parseInt(n);
+                        return parseFloat(t) + parseFloat(n);
                     };
                     $('#client-plan tbody > tr').remove();
                     var result2 = _.mapObject(
@@ -659,6 +670,7 @@
                                 $("#client-plan").append(construirHtmltable(item, typeDelete)); //insere a linha
                             })
                             let key2 = key.split('*')
+                            totalParcial=  value.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                             var rowTotal = '<tr class="total-linha">' +
                                 '<td></td>' + //offset
                                 '<td></td>' + //offset
@@ -671,12 +683,16 @@
                                 '<td></td>' +
                                 '<td></td>' +
                                 '<td></td>' +
-                                '<td><div class="nomeTotal"> R$ ' + value.total + '</div></td>' +
+                                '<td><div class="nomeTotal">' + totalParcial + '</div></td>' +
                                 '<td></td>' +
                                 '</tr>'
                             $("#client-plan").append(rowTotal); //insere a linha
+                            totalTabela+=value.total
+                          //  console.log(totalTabela,'totalTabela')
                             // console.log(key,'key')
                         })
+                        totalTabela = totalTabela.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                        $('#total-tabela').val(totalTabela);
                         //pausar para retirar o temporizador                  
                     setTimeout(function() {
                         $(`.loadding`).hide();
@@ -705,8 +721,9 @@
                                     var customerId10 = $(this).find("td").eq(9); //modelos
                                     var customerId11 = $(this).find("td").eq(10); //periodo
                                     var customerId12 = $(this).find("td").eq(11); //investimento
+                                    
                                     //  console.log(customerId ,'teste')
-                                    customerId6[0].childNodes[0].type == 'text' ? select6 = `${$(customerId6[0].childNodes[0]).val()}*input` : select6 = `${$(`#${customerId6[0].childNodes[0].id} option:selected`).val()}*select` ; //objetivo
+                            customerId6[0].childNodes[0].type == 'text' ? select6 = `${$(customerId6[0].childNodes[0]).val()}*input` : select6 = `${$(`#${customerId6[0].childNodes[0].id} option:selected`).val()}*select` ; //objetivo
                             customerId7[0].childNodes[0].type == 'text' ? select7 = `${$(customerId7[0].childNodes[0]).val()}*input`  : select7 = `${$(`#${customerId7[0].childNodes[0].id} option:selected`).val()}*select` ; //veiculo
                             customerId8[0].childNodes[0].type == 'text' ? select8 = `${$(customerId8[0].childNodes[0]).val()}*input`  : select8 = `${$(`#${customerId8[0].childNodes[0].id} option:selected`).val()}*select` ; //canal
                             customerId9[0].childNodes[0].type == 'text' ? select9 = `${$(customerId9[0].childNodes[0]).val()}*input`  : select9 = `${$(`#${customerId9[0].childNodes[0].id} option:selected`).val()}*select` ; //formatos
@@ -726,7 +743,7 @@
                             obj.id= id;
                             obj.delete= 0;
                             obj.periodo=$(customerId11[0].childNodes[0]).val();
-                            obj.investimento=$(customerId12[0].childNodes[0]).val();
+                            obj.investimento=$(customerId12[0].childNodes[1]).val();
                             //  console.log('obj')
                             arrData.push(obj);
                     }
@@ -742,6 +759,8 @@
             consolidarTabela()
         })
         
+        
     })
+  
 </script>
 @endsection
