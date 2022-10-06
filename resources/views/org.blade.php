@@ -346,8 +346,6 @@
         drop += `</select>`
         return drop
     }
-
-
     //retona os select
     function returnDrop(dados) {
         let idDrop = dados.id.split('/')
@@ -421,7 +419,7 @@
                     let data = $(this).serializeArray()
                     let col1
                     let col2
-                        //  console.log(data,)
+                    // console.log(data,'data')
                     event.preventDefault();
                     result2 = []
                         //  colunas =[]
@@ -652,6 +650,7 @@
                     //agrupa a tabela
                 function agruparTable(data, typeDelete) {
                     var totalTabela = 0
+                    
                     var sum = function(t, n) {
                         return parseFloat(t) + parseFloat(n);
                     };
@@ -670,7 +669,7 @@
                                 $("#client-plan").append(construirHtmltable(item, typeDelete)); //insere a linha
                             })
                             let key2 = key.split('*')
-                            totalParcial=  value.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                           // totalParcial=  value.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                             var rowTotal = '<tr class="total-linha">' +
                                 '<td></td>' + //offset
                                 '<td></td>' + //offset
@@ -683,7 +682,7 @@
                                 '<td></td>' +
                                 '<td></td>' +
                                 '<td></td>' +
-                                '<td><div class="nomeTotal">' + totalParcial + '</div></td>' +
+                                '<td><div class="nomeTotal">R$ ' + parseFloat(value.total).toFixed(3) + '</div></td>' +
                                 '<td></td>' +
                                 '</tr>'
                             $("#client-plan").append(rowTotal); //insere a linha
@@ -691,8 +690,7 @@
                           //  console.log(totalTabela,'totalTabela')
                             // console.log(key,'key')
                         })
-                        totalTabela = totalTabela.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-                        $('#total-tabela').val(totalTabela);
+                        $('#total-tabela').val(`R$ ${parseFloat(totalTabela).toFixed(3)}`);
                         //pausar para retirar o temporizador                  
                     setTimeout(function() {
                         $(`.loadding`).hide();
@@ -758,8 +756,6 @@
             $('#client-plan').css('opacity','0.1')
             consolidarTabela()
         })
-        
-        
     })
   
 </script>

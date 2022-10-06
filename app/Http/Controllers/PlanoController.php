@@ -122,7 +122,7 @@ class PlanoController extends Controller
                         $plano->modelos_compra = $item['value'].'*'.$pieces[1];
                         break;
                     case 'investimneto':
-                        $plano->investimento =  floatval($item['value']);
+                        $plano->investimento =  $item['value'];
                         break;
                      default:
 
